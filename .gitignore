@@ -39,3 +39,6 @@ run-sources-*/
 # Coverage
 coverage/
 .nyc_output/
+
+# secrets
+.secrets/

@@ -1,0 +1,43 @@
+name: Deploy case-service to Cloud Run
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/case-service/**'
+      - '.github/workflows/deploy-case-service.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: legal-platform-466208
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker europe-west1-docker.pkg.dev
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:latest ./apps/case-service
+          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy case-service \
+            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:latest \
+            --project=legal-platform-466208 \
+            --region=europe-west1 \
+            --platform=managed \
+            --allow-unauthenticated
