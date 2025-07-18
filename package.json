@@ -6,7 +6,8 @@
   "dev": "concurrently -n case,auth -c blue,green \"npm run dev --workspace=apps/case-service\" \"npm run dev --workspace=apps/auth-service\"",
   "build": "npm run build --workspace=apps/case-service && npm run build --workspace=apps/auth-service",
   "start": "concurrently -n case,auth -c blue,green \"npm run start --workspace=apps/case-service\" \"npm run start --workspace=apps/auth-service\"",
-  "i-all": "npm install && npm install --workspace=apps/case-service && npm install --workspace=apps/auth-service"
+  "i-all": "npm install && npm install --workspace=apps/case-service && npm install --workspace=apps/auth-service",
+  "tree": "node tree.js"
 }
 ,
   "devDependencies": {
