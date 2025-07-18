@@ -19,7 +19,7 @@ app.get('/health', (_, res) => {
 app.use('/cases', caseRoutes);
 
 app.get('/debug-env', (_, res) => {
-  res.send(`JWT_SECRET: ${process.env.JWT_SECRET}`);
+  res.send(`CASE_SECRET: ${process.env.CASE_SECRET}`);
 });
 
 app.listen(port, () => {
