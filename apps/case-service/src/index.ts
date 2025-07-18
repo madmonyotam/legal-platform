@@ -23,7 +23,7 @@ app.get('/debug-env', (_, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Case service running on port ${port}`);
+  console.log(`Case service running on port  ${port}`);
 });
 
 
