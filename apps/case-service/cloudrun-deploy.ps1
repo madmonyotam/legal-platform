@@ -1,7 +1,7 @@
 # docker-deploy.ps1
 
 # 1. Build Docker image
-docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service .
+docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service ./apps/case-service
 
 # 2. Push to Artifact Registry
 docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service

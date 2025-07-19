@@ -40,4 +40,5 @@ jobs:
             --project=legal-platform-466208 \
             --region=europe-west1 \
             --platform=managed \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --set-secrets "CASE_SECRET=CASE_SECRET:latest"
