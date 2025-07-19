@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - 'apps/case-service/**'
-      - '.github/workflows/deploy-case-service.yml'
+      - '.github/workflows/case-deploy.yml'
 
 jobs:
   deploy:

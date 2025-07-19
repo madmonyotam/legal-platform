@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - 'apps/auth-service/**'
-      - '.github/workflows/deploy-auth-service.yml'
+      - '.github/workflows/auth-deploy.yml'
 
 jobs:
   deploy:
