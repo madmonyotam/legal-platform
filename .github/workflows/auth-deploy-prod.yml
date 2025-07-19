@@ -1,11 +1,11 @@
-name: Deploy case-service (prod) to Cloud Run
+name: Deploy auth-service (prod) to Cloud Run
 
 on:
   push:
     branches: [prod]
     paths:
-      - 'apps/case-service/**'
-      - '.github/workflows/deploy-case-service-prod.yml'
+      - 'apps/auth-service/**'
+      - '.github/workflows/auth-deploy-prod.yml'
 
 jobs:
   deploy:
@@ -30,15 +30,16 @@ jobs:
 
       - name: Build and push Docker image (prod)
         run: |
-          docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:prod ./apps/case-service
-          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:prod
+          docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:prod ./apps/auth-service
+          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:prod
 
       - name: Deploy to Cloud Run (prod)
         run: |
-          gcloud run deploy case-service-prod \
-            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:prod \
+          gcloud run deploy auth-service-prod \
+            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:prod \
             --project=legal-platform-466208 \
             --region=europe-west1 \
             --platform=managed \
             --allow-unauthenticated \
-            --update-secrets=JWT_SECRET=JWT_SECRET_PROD:latest
+            --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
+            --set-secrets="JWT_SECRET=JWT_SECRET_PROD:latest"
