@@ -41,4 +41,4 @@ jobs:
             --region=europe-west1 \
             --platform=managed \
             --allow-unauthenticated \
-            --update-secrets=JWT_SECRET=JWT_SECRET_PROD:latest
+            --update-secrets=CASE_SECRET=CASE_SECRET_PROD:latest
