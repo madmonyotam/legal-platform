@@ -12,10 +12,10 @@
         ],
         "resolveJsonModule": true,
         "outDir": "dist",
-        "baseUrl": ".", 
+        "baseUrl": ".",
         "paths": {
-            "@shared-utils/*": [
-                "libs/shared-utils/src/*"
+            "@legal/shared-utils": [
+                "libs/shared-utils/src/index.ts"
             ]
         }
     }

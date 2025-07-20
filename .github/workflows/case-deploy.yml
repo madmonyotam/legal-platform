@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'libs/**'
+      - 'libs/shared-utils/**'
       - 'apps/case-service/**'
       - '.github/workflows/case-deploy.yml'
 

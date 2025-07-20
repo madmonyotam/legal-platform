@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import caseRoutes from './routes/case.routes';
-import { enforceInternalAccess } from '@shared-utils/middleware/internal-access';
+import { enforceInternalAccess } from '@legal/shared-utils';
 
 dotenv.config();
 
@@ -13,7 +13,7 @@ const port = process.env.PORT || 8082;
 app.use(cors());
 app.use(express.json());
 
-app.use('/cases',enforceInternalAccess, caseRoutes);
+app.use('/cases', enforceInternalAccess, caseRoutes);
 
 //temp
 app.get('/debug-env', (_, res) => {
