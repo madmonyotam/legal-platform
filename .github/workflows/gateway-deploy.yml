@@ -1,11 +1,11 @@
-name: Deploy case-service to Cloud Run
+name: Deploy gateway-service to Cloud Run
 
 on:
   push:
     branches: [main]
     paths:
-      - 'apps/case-service/**'
-      - '.github/workflows/case-deploy.yml'
+      - 'apps/gateway/**'
+      - '.github/workflows/gateway-deploy.yml'
 
 jobs:
   deploy:
@@ -30,17 +30,17 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:latest ./apps/case-service
-          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:latest
+          docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/gateway-service:latest ./apps/gateway
+          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/gateway-service:latest
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy case-service \
-            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:latest \
+          gcloud run deploy gateway-service \
+            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/gateway-service:latest \
             --project=legal-platform-466208 \
             --region=europe-west1 \
             --platform=managed \
             --allow-unauthenticated \
             --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
-            --set-secrets="INTERNAL_SECRET=INTERNAL_SECRET:latest" \
-            --set-env-vars="PORT=8082"
+            --set-env-vars "PORT=8080,AUTH_SERVICE_URL=https://auth-service-423226444985.europe-west1.run.app,CASE_SERVICE_URL=https://case-service-423226444985.europe-west1.run.app" \
+            --set-secrets "INTERNAL_SECRET=INTERNAL_SECRET:latest"

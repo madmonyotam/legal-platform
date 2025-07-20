@@ -41,4 +41,6 @@ jobs:
             --region=europe-west1 \
             --platform=managed \
             --allow-unauthenticated \
-            --update-secrets=CASE_SECRET=CASE_SECRET_PROD:latest
+            --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
+            --set-secrets="INTERNAL_SECRET=INTERNAL_SECRET_PROD:latest" \
+            --set-env-vars="PORT=8082"
