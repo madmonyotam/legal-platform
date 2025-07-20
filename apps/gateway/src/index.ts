@@ -23,6 +23,8 @@ app.get('/api/cases', authenticate, async (req, res) => {
     });
 
     if (!response.ok) {
+      console.log("secret: ",process.env.INTERNAL_SECRET);
+      
       return res.status(response.status).json({ error: 'Case service error' });
     }
 
