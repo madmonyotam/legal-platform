@@ -6,7 +6,7 @@ export const enforceInternalAccess = (
   next: NextFunction
 ) => {
   const internalHeader = req.headers['x-internal-auth'] as string;
-  if (internalHeader !== process.env.INTERNAL_SECRET) {
+  if (internalHeader.trim() !== process.env.INTERNAL_SECRET?.trim()) {
     return res.status(403).json({ error: 'Forbidden – external access denied' });
   }
   next();
