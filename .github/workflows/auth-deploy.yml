@@ -29,9 +29,11 @@ jobs:
         run: gcloud auth configure-docker europe-west1-docker.pkg.dev
 
       - name: Build and push Docker image
-        run: |
-          docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:latest ./apps/auth-service
-          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:latest
+      - run: |
+            docker build -f apps/auth-service/Dockerfile \
+              -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:latest \
+              .
+            docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:latest
 
       - name: Deploy to Cloud Run
         run: |
