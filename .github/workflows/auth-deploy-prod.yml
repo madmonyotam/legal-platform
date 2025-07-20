@@ -30,7 +30,9 @@ jobs:
 
       - name: Build and push Docker image (prod)
         run: |
-          docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:prod ./apps/auth-service
+          docker build -f apps/auth-service/Dockerfile \
+            -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:prod \
+            .
           docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:prod
 
       - name: Deploy to Cloud Run (prod)

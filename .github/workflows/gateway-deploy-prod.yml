@@ -28,12 +28,14 @@ jobs:
       - name: Configure Docker for Artifact Registry
         run: gcloud auth configure-docker europe-west1-docker.pkg.dev
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image (prod)
         run: |
-          docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/gateway-service:prod ./apps/gateway
+          docker build -f apps/gateway/Dockerfile \
+            -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/gateway-service:prod \
+            .
           docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/gateway-service:prod
 
-      - name: Deploy to Cloud Run
+      - name: Deploy to Cloud Run (prod)
         run: |
           gcloud run deploy gateway-service-prod \
             --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/gateway-service:prod \
@@ -42,5 +44,5 @@ jobs:
             --platform=managed \
             --allow-unauthenticated \
             --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
-            --set-env-vars "AUTH_SERVICE_URL=https://auth-service-prod-423226444985.europe-west1.run.app,CASE_SERVICE_URL=https://case-service-prod-423226444985.europe-west1.run.app" \
+             --set-env-vars "AUTH_SERVICE_URL=https://auth-service-prod-423226444985.europe-west1.run.app,CASE_SERVICE_URL=https://case-service-prod-423226444985.europe-west1.run.app" \
             --set-secrets "INTERNAL_SECRET=INTERNAL_SECRET_PROD:latest"
