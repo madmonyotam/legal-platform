@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
+    "build": "tsc && tsc-alias",
+    "start": "node dist/apps/gateway/src/index.js",
     "dev": "nodemon"
   },
   "keywords": [],
