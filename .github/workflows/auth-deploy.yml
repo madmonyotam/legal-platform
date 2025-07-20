@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'libs/**'
       - 'apps/auth-service/**'
       - '.github/workflows/auth-deploy.yml'
 
