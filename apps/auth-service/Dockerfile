@@ -7,6 +7,7 @@ COPY ../../package*.json ../../tsconfig.json ./
 
 # התקנה כולל devDependencies (כדי לכלול typescript ו־tsc)
 RUN npm install --include=dev
+RUN npm install --workspace=apps/auth-service
 
 # העתקה של כל קוד המונורפו
 COPY ../../ .
