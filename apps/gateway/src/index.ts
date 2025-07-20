@@ -23,9 +23,10 @@ app.get('/api/cases', authenticate, async (req, res) => {
     });
 
     if (!response.ok) {
-      console.log("secret: ",process.env.INTERNAL_SECRET);
+       const errorText = await response.text();
+       console.error('❌ Case service returned:', response.status, errorText);
       
-      return res.status(response.status).json({ error: 'Case service error' });
+      return res.status(response.status).json({ error: 'Case service error', details: errorText });
     }
 
     const data = await response.json();
