@@ -23,10 +23,7 @@ app.get('/api/cases', authenticate, async (req, res) => {
     });
 
     if (!response.ok) {
-       const errorText = await response.text();
-       console.error('❌ Case service returned:', response.status, errorText);
-      
-      return res.status(response.status).json({ error: 'Case service error', details: errorText });
+      return res.status(response.status).json({ error: 'Case service error' });
     }
 
     const data = await response.json();
