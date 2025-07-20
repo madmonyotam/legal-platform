@@ -2,20 +2,19 @@ FROM node:20-slim
 
 WORKDIR /app
 
-# העתק קבצים חיוניים
-COPY ../../package*.json ../../tsconfig.json ./
-
-# התקנה כולל devDependencies (כדי לכלול typescript ו־tsc)
-RUN npm install --include=dev
-RUN npm install --workspace=apps/auth-service
-
-# העתקה של כל קוד המונורפו
+# שלב 1: העתק את כל המונורפו
 COPY ../../ .
 
-# מעבר לספריית השירות
+# שלב 2: התקנת תלויות כולל dev (בזכות ה־package.json הראשי)
+RUN npm install --include=dev
+
+# שלב 3: התקנת תלויות של השירות הספציפי
+RUN npm install --workspace=apps/auth-service
+
+# שלב 4: כניסה לתוך השירות
 WORKDIR /app/apps/auth-service
 
-# קומפילציה
+# שלב 5: קומפילציה
 RUN npm run build
 
 CMD ["npm", "start"]
