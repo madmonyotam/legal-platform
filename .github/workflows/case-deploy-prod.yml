@@ -42,5 +42,4 @@ jobs:
             --platform=managed \
             --allow-unauthenticated \
             --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
-            --set-secrets="INTERNAL_SECRET=INTERNAL_SECRET_PROD:latest" \
-            --set-env-vars="PORT=8082"
+            --set-secrets="INTERNAL_SECRET=INTERNAL_SECRET_PROD:latest"
