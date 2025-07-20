@@ -18,7 +18,7 @@ app.get('/api/cases', authenticate, async (req, res) => {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': req.headers.authorization!,
-        'x-internal-auth': process.env.INTERNAL_SECRET!
+        'x-internal-auth': process.env.INTERNAL_SECRET!.trim()
       },
     });
 
