@@ -30,7 +30,9 @@ jobs:
 
       - name: Build and push Docker image (prod)
         run: |
-          docker build -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:prod ./apps/case-service
+          docker build -f apps/case-service/Dockerfile \
+            -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:prod \
+            .
           docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/case-service:prod
 
       - name: Deploy to Cloud Run (prod)
@@ -41,4 +43,5 @@ jobs:
             --region=europe-west1 \
             --platform=managed \
             --allow-unauthenticated \
-            --update-secrets=CASE_SECRET=CASE_SECRET_PROD:latest
+            --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
+            --set-secrets="INTERNAL_SECRET=INTERNAL_SECRET_PROD:latest"

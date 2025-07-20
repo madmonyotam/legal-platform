@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { healthCheck, login, getMe, validateToken } from '../controllers/auth.controller';
+import { health, login, me, validate } from '../controllers/auth.controller';
 
 const router = Router();
 
-router.get('/health', healthCheck);
+router.get('/health', health);
 router.post('/login', login);
-router.get('/me', getMe);
-router.get('/validate', validateToken);
+router.get('/me', me);
+router.get('/validate', validate);
 
 export default router;

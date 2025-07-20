@@ -7,12 +7,14 @@ COPY ../../ .
 
 RUN npm install
 # שלב 3: התקנת תלויות של השירות הספציפי
-RUN npm install --workspace=apps/auth-service
+RUN npm install --workspace=apps/gateway
 
 # שלב 4: כניסה לתוך השירות
-WORKDIR /app/apps/auth-service
+WORKDIR /app/apps/gateway
 
 # שלב 5: קומפילציה
 RUN npm run build
 
 CMD ["npm", "start"]
+
+

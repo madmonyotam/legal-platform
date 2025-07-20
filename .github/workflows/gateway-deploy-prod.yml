@@ -1,11 +1,11 @@
-name: Deploy auth-service (prod) to Cloud Run
+name: Deploy gateway-service (prod) to Cloud Run
 
 on:
   push:
     branches: [prod]
     paths:
-      - 'apps/auth-service/**'
-      - '.github/workflows/auth-deploy-prod.yml'
+      - 'apps/gateway/**'
+      - '.github/workflows/gateway-deploy-prod.yml'
 
 jobs:
   deploy:
@@ -30,18 +30,19 @@ jobs:
 
       - name: Build and push Docker image (prod)
         run: |
-          docker build -f apps/auth-service/Dockerfile \
-            -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:prod \
+          docker build -f apps/gateway/Dockerfile \
+            -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/gateway-service:prod \
             .
-          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:prod
+          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/gateway-service:prod
 
       - name: Deploy to Cloud Run (prod)
         run: |
-          gcloud run deploy auth-service-prod \
-            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/auth-service:prod \
+          gcloud run deploy gateway-service-prod \
+            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/gateway-service:prod \
             --project=legal-platform-466208 \
             --region=europe-west1 \
             --platform=managed \
             --allow-unauthenticated \
             --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
-            --set-secrets="JWT_SECRET=JWT_SECRET_PROD:latest"
+             --set-env-vars "AUTH_SERVICE_URL=https://auth-service-prod-423226444985.europe-west1.run.app,CASE_SERVICE_URL=https://case-service-prod-423226444985.europe-west1.run.app" \
+            --set-secrets "INTERNAL_SECRET=INTERNAL_SECRET_PROD:latest"
