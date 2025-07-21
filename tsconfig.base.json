@@ -14,9 +14,17 @@
         "outDir": "dist",
         "baseUrl": ".",
         "paths": {
+            "@legal/logger": [
+                "libs/logger/src/index.ts"
+            ],
             "@legal/shared-utils": [
                 "libs/shared-utils/src/index.ts"
             ]
         }
-    }
+    },
+    "exclude": [
+        "node_modules",
+        "**/*.test.ts",
+        "**/__tests__/**"
+    ]
 }
