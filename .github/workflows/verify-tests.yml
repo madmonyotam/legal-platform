@@ -1,4 +1,3 @@
-# .github/workflows/verify-tests.yml
 name: Verify Tests
 
 on:
