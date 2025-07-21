@@ -9,28 +9,33 @@
     "dev": "concurrently -n case,auth,gateway -c blue,green,magenta \"npm run dev --workspace=apps/case-service\" \"npm run dev --workspace=apps/auth-service\" \"npm run dev --workspace=apps/gateway\"",
     "build": "npm run build --workspace=apps/case-service && npm run build --workspace=apps/auth-service && npm run build --workspace=apps/gateway",
     "start": "concurrently -n case,auth,gateway -c blue,green,magenta \"npm run start --workspace=apps/case-service\" \"npm run start --workspace=apps/auth-service\" \"npm run start --workspace=apps/gateway\"",
-    "i-all": "npm install && npm install --workspace=apps/case-service && npm install --workspace=apps/auth-service",
     "clean": "shx rm -rf apps/*/node_modules apps/*/dist libs/*/dist **/*.tsbuildinfo && shx rm -rf node_modules package-lock.json",
-    "tree": "node tree.js"
+    "tree": "node tree.js",
+    "test": "jest"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^4.17.21",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.15",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.37.0",
     "@typescript-eslint/parser": "^8.37.0",
     "concurrently": "^8.2.0",
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
+    "jest": "^30.0.4",
     "nodemon": "^3.1.10",
     "shx": "^0.4.0",
+    "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
