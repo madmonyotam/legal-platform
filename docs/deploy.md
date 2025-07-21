@@ -12,18 +12,22 @@ Deployment is fully automated via **GitHub Actions**, using dedicated workflows 
 ├── auth-deploy-prod.yml    # Deploy auth-service on push to prod
 ├── case-deploy.yml         # Deploy case-service on push to main
 ├── case-deploy-prod.yml    # Deploy case-service on push to prod
+├── gateway-deploy.yml      # Deploy gateway on push to main
+├── gateway-deploy-prod.yml # Deploy gateway on push to prod
 ```
 
 ---
 
 ## 📌 Environments
 
-| Branch | Service        | Workflow File          | Cloud Run Service   | Secret             |
-| ------ | -------------- | ---------------------- | ------------------- | ------------------ |
-| `main` | `auth-service` | `auth-deploy.yml`      | `auth-service`      | `JWT_SECRET`       |
-| `prod` | `auth-service` | `auth-deploy-prod.yml` | `auth-service-prod` | `JWT_SECRET_PROD`  |
-| `main` | `case-service` | `case-deploy.yml`      | `case-service`      | `CASE_SECRET`      |
-| `prod` | `case-service` | `case-deploy-prod.yml` | `case-service-prod` | `CASE_SECRET_PROD` |
+| Branch | Service        | Workflow File              | Cloud Run Service     | Secret                |
+|--------|----------------|----------------------------|-----------------------|------------------------|
+| `main` | `auth-service` | `auth-deploy.yml`          | `auth-service`        | `JWT_SECRET`           |
+| `prod` | `auth-service` | `auth-deploy-prod.yml`     | `auth-service-prod`   | `JWT_SECRET_PROD`      |
+| `main` | `case-service` | `case-deploy.yml`          | `case-service`        | `CASE_SECRET`          |
+| `prod` | `case-service` | `case-deploy-prod.yml`     | `case-service-prod`   | `CASE_SECRET_PROD`     |
+| `main` | `gateway`      | `gateway-deploy.yml`       | `gateway`             | `GATEWAY_SECRET`       |
+| `prod` | `gateway`      | `gateway-deploy-prod.yml`  | `gateway-prod`        | `GATEWAY_SECRET_PROD`  |
 
 ---
 
@@ -46,6 +50,7 @@ Each Cloud Run service is associated with a dedicated **Service Account** with m
   ```
   europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/
   ```
+
 * Deployment is triggered by GitHub push events (to `main` or `prod`)
 * Cloud Run services are exposed publicly (`--allow-unauthenticated`)
 
