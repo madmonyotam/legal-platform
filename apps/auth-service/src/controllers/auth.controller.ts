@@ -34,6 +34,7 @@ export const me = (req: Request, res: Response) => {
 
 export const validate = (req: Request, res: Response) => {
   const token = getTokenFromHeader(req);
+
   if (!token) return res.status(401).json({ valid: false });
 
   try {

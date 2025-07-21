@@ -1,1 +1,1 @@
-export { default as logger } from './logger';
+export { baseLogger, logger, setContext, getContext } from './logger';
