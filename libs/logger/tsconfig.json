@@ -3,9 +3,10 @@
     "compilerOptions": {
         "composite": true,
         "outDir": "dist",
-        "rootDir": "src"
+        "rootDir": "../../"
     },
     "include": [
-        "src"
+        "src",
+        "../shared-utils/src/index.ts"
     ]
 }

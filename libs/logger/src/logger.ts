@@ -26,8 +26,7 @@ const baseLogger = createLogger({
     transports: [new transports.Console()]
 });
 
-// פונקציות שכוללות את ההקשר האוטומטי
-const wrap = (level: 'info' | 'error' | 'warn') => {
+const wrap = (level: 'info' | 'error' | 'warn' | 'debug') => {
     return (message: string, meta: Record<string, any> = {}) => {
         const context = getContext();
         baseLogger[level](message, { ...context, ...meta });
@@ -38,6 +37,7 @@ const logger = {
     info: wrap('info'),
     error: wrap('error'),
     warn: wrap('warn'),
+    debug: wrap('debug'),
 };
 
 export { baseLogger, logger, setContext, getContext };
