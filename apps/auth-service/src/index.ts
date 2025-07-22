@@ -12,11 +12,6 @@ app.use(cors());
 app.use(express.json());
 app.use('/auth', authRoutes);
 
-//temp
-app.get('/debug-env', (_, res) => {
-  res.send(`JWT_SECRET: ${process.env.JWT_SECRET}`);
-});
-
 app.listen(PORT, () => {
   console.log(`Auth service running on port ${PORT}`);
 });

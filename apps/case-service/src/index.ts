@@ -3,25 +3,19 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import caseRoutes from './routes/case.routes';
 import { enforceInternalAccess } from '@legal/shared-utils';
-
-dotenv.config();
+import { logger, requestContext } from '@legal/logger';
+import { PORT } from './config';
 
 const app = express();
-const port = process.env.PORT || 8082;
-
+app.use(requestContext('case-service'));
 
 app.use(cors());
 app.use(express.json());
 
 app.use('/cases', enforceInternalAccess, caseRoutes);
 
-//temp
-app.get('/debug-env', (_, res) => {
-  res.send(`CASE_SECRET: ${process.env.CASE_SECRET}`);
-});
-
-app.listen(port, () => {
-  console.log(`Case service running on port  ${port}`);
+app.listen(PORT, () => {
+  logger.info(`Case service listening on port ${PORT}`);
 });
 
 
