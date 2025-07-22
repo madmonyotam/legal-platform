@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import { logger, requestContext } from '@legal/logger';
-import { errorHandler } from '@legal/logger'; // ✅ נניח שזה ב־libs/logger
+import { errorHandler } from '@legal/logger';
+import { AppError } from '@legal/shared-utils';
 import { authenticate } from './middleware/auth.middleware';
 import { CASE_SERVICE_URL, PORT } from './config';
 
@@ -25,7 +26,8 @@ app.get('/api/cases', authenticate, async (req, res, next) => {
     });
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: 'Case service error' });
+      const errorBody = await response.json();
+      return next(new AppError('Case service error', response.status, true, errorBody));
     }
 
     const data = await response.json();

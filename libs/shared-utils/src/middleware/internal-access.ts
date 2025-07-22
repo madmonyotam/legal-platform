@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
+import { AppError } from '@legal/shared-utils';
 
 export const enforceInternalAccess = (
   req: Request,
@@ -6,8 +7,10 @@ export const enforceInternalAccess = (
   next: NextFunction
 ) => {
   const internalHeader = req.headers['x-internal-auth'] as string;
-  if (internalHeader.trim() !== process.env.INTERNAL_SECRET?.trim()) {
-    return res.status(403).json({ error: 'Forbidden – external access denied' });
+
+  if (internalHeader?.trim() !== process.env.INTERNAL_SECRET?.trim()) {
+    return next(new AppError('Forbidden – external access denied', 403));
   }
+
   next();
 };

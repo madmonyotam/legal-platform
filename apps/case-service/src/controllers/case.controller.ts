@@ -6,16 +6,11 @@ export const healthCheck = (req: Request, res: Response) => {
   res.status(200).send('Case Service is healthy');
 };
 
-export const getCases = (req: Request, res: Response) => {
+export const getCases = async (req: Request, res: Response) => {
   logger.info('GET /cases - getCases called');
 
-  try {
-    const result = { message: 'All cases' };
+  const result = { message: 'All cases' };
 
-    logger.debug('Response:', result);
-    res.json(result);
-  } catch (err) {
-    logger.error('Failed to fetch cases', { error: err });
-    res.status(500).json({ error: 'Internal server error' });
-  }
+  logger.debug('Response:', result);
+  res.json(result);
 };

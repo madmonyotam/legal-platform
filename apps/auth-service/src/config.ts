@@ -9,5 +9,5 @@ if (!process.env.JWT_SECRET) {
 }
 
 export const PORT = process.env.PORT ?? 8081;
-export const JWT_SECRET: string = process.env.JWT_SECRET;
-export const JWT_EXPIRES_IN: string = process.env.JWT_EXPIRES_IN ?? '1h';
+export const JWT_SECRET = process.env.JWT_SECRET.trim();
+export const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN?.trim() ?? '1h';
