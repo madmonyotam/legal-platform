@@ -4,7 +4,7 @@ import { logger, requestContext } from '@legal/logger';
 import { errorHandler } from '@legal/logger';
 import { AppError } from '@legal/shared-utils';
 import { authenticate } from './middleware/auth.middleware';
-import { CASE_SERVICE_URL, PORT } from './config';
+import { CASE_SERVICE_URL, INTERNAL_SECRET, PORT } from './config';
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.get('/api/cases', authenticate, async (req, res, next) => {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': req.headers.authorization!,
-        'x-internal-auth': process.env.INTERNAL_SECRET!
+        'x-internal-auth': INTERNAL_SECRET
       },
     });
 

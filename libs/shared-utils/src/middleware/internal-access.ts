@@ -8,7 +8,7 @@ export const enforceInternalAccess = (
 ) => {
   const internalHeader = req.headers['x-internal-auth'] as string;
 
-  if (internalHeader?.trim() !== process.env.INTERNAL_SECRET?.trim()) {
+  if (internalHeader !== process.env.INTERNAL_SECRET?.trim()) {
     return next(new AppError('Forbidden – external access denied', 403));
   }
 
