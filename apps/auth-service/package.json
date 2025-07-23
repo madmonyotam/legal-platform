@@ -2,13 +2,15 @@
   "name": "auth-service",
   "version": "1.0.0",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && tsc-alias",
-    "start": "node dist/apps/auth-service/src/index.js",
+    "build": "tsc --build",
+    "start": "node dist/index.js",
     "dev": "nodemon"
   },
   "dependencies": {
+    "@legal/logger": "*",
+    "@legal/shared-utils": "*",
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {

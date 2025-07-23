@@ -1,12 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import caseRoutes from './routes/case.routes';
 import { enforceInternalAccess } from '@legal/shared-utils';
 import { logger, requestContext, errorHandler } from '@legal/logger';
 import { PORT } from './config';
-
-dotenv.config();
 
 const app = express();
 

@@ -1,0 +1,20 @@
+{
+    "files": [],
+    "references": [
+        {
+            "path": "libs/shared-utils"
+        },
+        {
+            "path": "libs/logger"
+        },
+        {
+            "path": "apps/auth-service"
+        },
+        {
+            "path": "apps/case-service"
+        },
+        {
+            "path": "apps/gateway"
+        }
+    ]
+}
