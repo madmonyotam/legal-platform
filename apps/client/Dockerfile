@@ -15,7 +15,7 @@ RUN npm run build --workspace=apps/client
 # שלב 2 – הגשת ה־dist עם preview של Vite
 FROM node:20-slim AS runner
 
-WORKDIR /app/apps/client/dist
+WORKDIR /app
 
 # התקנת vite למצב preview
 RUN npm install -g vite
@@ -23,7 +23,7 @@ RUN npm install -g vite
 # העתקת קבצי build בלבד מהשלב הקודם
 COPY --from=builder /app/apps/client/dist ./dist
 
-EXPOSE 8080
+EXPOSE 4173
 
-CMD ["serve", "dist", "-l", "8080"]
+CMD ["vite", "preview", "--port", "4173", "--host"]
 
