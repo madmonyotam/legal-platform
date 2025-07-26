@@ -11,7 +11,7 @@ export default defineConfig({
     target: 'esnext',        // לקוד מודרני – אפשר גם 'es2015' לשוק רחב
     cssCodeSplit: true,      // מפצל CSS לקבצים נפרדים
   },
-  server: {
+  preview: {
     allowedHosts: true, // מאפשר preview מכל host
   }
 })

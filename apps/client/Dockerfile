@@ -23,7 +23,7 @@ RUN npm install -g vite
 # העתקת קבצי build בלבד מהשלב הקודם
 COPY --from=builder /app/apps/client/dist ./dist
 
-EXPOSE 4173
+EXPOSE 8080
 
-CMD ["sh", "-c", "vite preview --port $PORT --host"]
+CMD ["serve", "dist", "-l", "8080"]
 
