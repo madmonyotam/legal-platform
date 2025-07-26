@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
-    "axios": "^1.11.0",
     "framer-motion": "^12.23.9",
     "i18next": "^25.3.2",
     "react": "^19.1.0",

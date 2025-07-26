@@ -16,6 +16,7 @@
     "start": "concurrently -n case,auth,gateway,client -c blue,green,magenta,yellow \"npm run start --workspace=apps/case-service\" \"npm run start --workspace=apps/auth-service\" \"npm run start --workspace=apps/gateway\" \"npm run preview --workspace=apps/client\""
   },
   "dependencies": {
+    "axios": "^1.11.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^4.18.2",
