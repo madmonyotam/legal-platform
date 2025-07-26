@@ -11,7 +11,7 @@
     "build": "tsc --build",
     "full-reset": "npm run clean && npm install && npm run build",
     "clean": "shx rm -rf apps/*/node_modules apps/*/dist libs/*/dist **/*.tsbuildinfo && shx rm -rf node_modules package-lock.json",
-    "dev": "concurrently -n case,auth,gateway -c blue,green,magenta \"npm run dev --workspace=apps/case-service\" \"npm run dev --workspace=apps/auth-service\" \"npm run dev --workspace=apps/gateway\"",
+    "dev": "concurrently -n case,auth,gateway,client -c blue,green,magenta,yellow \"npm run dev --workspace=apps/case-service\" \"npm run dev --workspace=apps/auth-service\" \"npm run dev --workspace=apps/gateway\" \"npm run dev --workspace=apps/client\"",
     "start": "concurrently -n case,auth,gateway -c blue,green,magenta \"npm run start --workspace=apps/case-service\" \"npm run start --workspace=apps/auth-service\" \"npm run start --workspace=apps/gateway\""
   },
   "dependencies": {
