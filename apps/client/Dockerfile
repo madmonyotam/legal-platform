@@ -15,7 +15,7 @@ RUN npm run build --workspace=apps/client
 # שלב 2 – הגשת ה־dist עם preview של Vite
 FROM node:20-slim AS runner
 
-WORKDIR /app
+WORKDIR /app/apps/client/dist
 
 # התקנת vite למצב preview
 RUN npm install -g vite
