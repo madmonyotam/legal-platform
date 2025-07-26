@@ -12,6 +12,6 @@ export default defineConfig({
     cssCodeSplit: true,      // מפצל CSS לקבצים נפרדים
   },
   preview: {
-    allowedHosts: ['https://client-423226444985.europe-west1.run.app/'],
+    allowedHosts: ['https://client-423226444985.europe-west1.run.app'],
   }
 })
