@@ -40,7 +40,7 @@ legal-platform/
 
 ```bash
 # Install all dependencies
-npm run i-all
+npm install
 
 # Run auth + case service in parallel (dev mode)
 npm run dev
