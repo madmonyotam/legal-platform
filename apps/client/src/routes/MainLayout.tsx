@@ -16,11 +16,13 @@ const Nav = styled.nav`
 `;
 
 export const MainLayout = ({ children }: { children?: ReactNode }) => (
-    <Wrapper>
-        <Nav>
-            <Link to="/">בית</Link>
-            <Link to="/login">התחברות</Link>
-        </Nav>
-        {children ?? <Outlet />}
-    </Wrapper>
+  <Wrapper>
+    <Nav>
+      <Link to="/">בית</Link>
+      <Link to="/cases">תיקים</Link>
+      <Link to="/me">פרופיל</Link>
+      <Link to="/login">התחברות</Link>
+    </Nav>
+    {children ?? <Outlet />}
+  </Wrapper>
 );
