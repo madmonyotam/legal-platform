@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "extract-en": "ts-node scripts/extract-translations.ts -- lang=en",
+    "extract-he": "ts-node scripts/extract-translations.ts -- lang=he"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",

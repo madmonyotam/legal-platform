@@ -5,13 +5,13 @@
     "profile": "Profile",
     "login": "Login"
   },
-  "welcome": "Legal Platform \u2013 Client",
+  "welcome": "Legal Platform – Client",
   "start": "Start",
   "cases": {
     "title": "Cases"
   },
   "notFound": {
-    "title": "404 - Page Not Found",
+    "title": "Title",
     "message": "Sorry, the page you are looking for does not exist."
   }
 }
