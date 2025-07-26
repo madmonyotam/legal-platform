@@ -10,5 +10,8 @@ export default defineConfig({
     minify: 'esbuild',       // ברירת מחדל – מהיר ויעיל
     target: 'esnext',        // לקוד מודרני – אפשר גם 'es2015' לשוק רחב
     cssCodeSplit: true,      // מפצל CSS לקבצים נפרדים
+  },
+  preview: {
+    allowedHosts: true, // מאפשר preview מכל host
   }
 })
