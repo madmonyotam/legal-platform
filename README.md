@@ -101,6 +101,15 @@ Region: europe-west1
 
 ---
 
+## 📌 Documentation
+
+- [Frontend Guidelines](docs/frontend-guidelines.md) – עקרונות הפיתוח של ממשק המשתמש
+- [Vision](docs/vision.md) – חזון וערכים
+- [Deployment](docs/deploy.md) – תהליך דיפלוי
+- [External Integrations](docs/External-integrations.md) – מקורות מידע משפטיים חיצוניים
+- [Error Handling](docs/errors.md) – הנחיות לניהול שגיאות
+- [Logging](docs/logs.md) – הנחיות לרישום לוגים
+
 ## 📌 Recent Progress
 
 * ✅ מונוריפו עם `apps/` ו־`libs/`
