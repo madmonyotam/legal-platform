@@ -1,0 +1,48 @@
+name: Deploy client (prod) to Cloud Run
+
+on:
+  push:
+    branches: [prod]
+    paths:
+      - 'libs/shared-utils/**'
+      - 'apps/client/**'
+      - '.github/workflows/client-deploy-prod.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: legal-platform-466208
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker europe-west1-docker.pkg.dev
+
+      - name: Build and push Docker image 
+        run: |
+          docker build -f apps/client/Dockerfile \
+            -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/client:latest \
+            .
+          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/client:latest
+
+      - name: Deploy to Cloud Run (prod)
+        run: |
+          gcloud run deploy client-prod \
+            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/client:latest \
+            --project=legal-platform-466208 \
+            --region=europe-west1 \
+            --platform=managed \
+            --allow-unauthenticated \
+            --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
+            --set-env-vars "VITE_API_URL=https://gateway-url/api,VITE_USE_MOCK=false,VITE_USE_AUTH=true,VITE_DEFAULT_THEME=light,VITE_DEFAULT_LOCALE=en"
