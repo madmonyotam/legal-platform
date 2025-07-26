@@ -9,29 +9,49 @@ A modular backend system for managing legal case files, powered by Google Cloud 
 ```
 legal-platform/
 ├── .github/
-│   └── workflows/                   # GitHub Actions CI/CD workflows (auth, case, gateway)
-├── .secrets/                        # Local secrets (not committed)
+│   └── workflows/                   # GitHub Actions CI/CD (auth, case, client, gateway)
+├── .secrets/                        # Local secrets (ignored by git)
 ├── apps/
-│   ├── auth-service/                # Authentication microservice (JWT, /login, /me)
-│   ├── case-service/                # Case handling microservice
-│   ├── gateway/                     # API Gateway with auth middleware
-│   ├── doc-service/                 # Document management microservice (stub)
-│   └── ai-service/                  # AI processing microservice (stub)
-├── docs/                            # Documentation (vision, deploy, integrations)
+│   ├── ai-service/                  # AI microservice (stub)
+│   ├── auth-service/               # Auth microservice (JWT, login, me)
+│   ├── case-service/               # Case management microservice
+│   ├── client/                     # Frontend React app (Vite)
+│   │   ├── src/
+│   │   │   ├── api/                # axios + mocks
+│   │   │   ├── components/         # Reusable UI components
+│   │   │   ├── config/             # Frontend config/env
+│   │   │   ├── hooks/              # Custom React hooks
+│   │   │   ├── locales/            # i18n translations (he/en)
+│   │   │   ├── pages/              # Page components
+│   │   │   ├── routes/             # AppRoutes and Layouts
+│   │   │   ├── store/              # Redux Toolkit store
+│   │   │   ├── styles/             # styled-components + themes
+│   │   │   └── utils/              # Utilities/helpers
+│   │   ├── public/                 # Static assets
+│   │   └── scripts/                # Dev tools (e.g. extract-translations)
+│   ├── doc-service/                # Document storage (stub)
+│   └── gateway/                    # API gateway (auth middleware)
+├── docs/                            # Project documentation
+│   ├── deploy.md
+│   ├── errors.md
+│   ├── External-integrations.md
+│   ├── frontend-guidelines.md
+│   ├── logs.md
+│   └── vision.md
 ├── infra/
-│   ├── cloud-run/                   # GCP deployment scripts
-│   └── docker/                      # Base Docker config
+│   ├── cloud-run/                  # GCP deployment scripts
+│   └── docker/                     # Base Dockerfiles
 ├── libs/
-│   ├── db/                          # Shared DB layer
-│   ├── shared-utils/               # Internal access middleware and utilities
-│   └── types/                       # Shared TypeScript types
+│   ├── db/                         # Shared DB layer
+│   ├── logger/                     # Shared logger (winston wrapper)
+│   ├── shared-utils/              # Internal middleware and utils
+│   └── types/                      # Shared TypeScript types
 ├── .env.example
-├── .gitignore
-├── turborepo.json
-├── tree.js                          # Tree structure script
 ├── package.json
-├── package-lock.json
+├── turborepo.json
+├── tsconfig.base.json
 └── README.md
+
 ```
 
 ---
