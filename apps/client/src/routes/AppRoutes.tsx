@@ -9,6 +9,7 @@ import { DocumentUpload } from '../pages/DocumentUpload';
 import { CaseAnalyze } from '../pages/CaseAnalyze';
 import { Draft } from '../pages/Draft';
 import { Profile } from '../pages/Profile';
+import { NotFound } from '../pages/NotFound';
 import { ProtectedRoute } from '../components/ProtectedRoute';
 import { Button } from '../components/Button';
 import { MainLayout } from './MainLayout';
@@ -92,6 +93,7 @@ export const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+      <Route path="*" element={<NotFound />} />
     </Route>
     </Routes>
   );
