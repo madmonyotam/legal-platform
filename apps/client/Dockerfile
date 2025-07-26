@@ -25,5 +25,5 @@ COPY --from=builder /app/apps/client/dist ./dist
 
 EXPOSE 4173
 
-CMD ["vite", "preview", "--port", "4173", "--host"]
+CMD ["sh", "-c", "vite preview --port $PORT --host"]
 
