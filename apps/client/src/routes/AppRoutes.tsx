@@ -9,15 +9,20 @@ import { DocumentUpload } from '../pages/DocumentUpload';
 import { CaseAnalyze } from '../pages/CaseAnalyze';
 import { Draft } from '../pages/Draft';
 import { Profile } from '../pages/Profile';
-import { NotFound } from '../pages/NotFound';
 import { ProtectedRoute } from '../components/ProtectedRoute';
 import { Button } from '../components/Button';
 import { MainLayout } from './MainLayout';
+import type { JSX } from 'react';
+import { NotFound } from '../pages/NotFound';
+
+const protect = (element: JSX.Element) => <ProtectedRoute>{element}</ProtectedRoute>;
 
 export const AppRoutes = () => {
   const { t } = useTranslation();
+
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route element={<MainLayout />}>
         <Route
           path="/"
@@ -28,73 +33,16 @@ export const AppRoutes = () => {
             </main>
           }
         />
-      <Route path="/login" element={<Login />} />
-      <Route
-        path="/cases"
-        element={
-          <ProtectedRoute>
-            <CasesList />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/cases/:id"
-        element={
-          <ProtectedRoute>
-            <CaseDetails />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/cases/:id/edit"
-        element={
-          <ProtectedRoute>
-            <CaseEdit />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/cases/:id/documents"
-        element={
-          <ProtectedRoute>
-            <CaseDocuments />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/cases/:id/documents/upload"
-        element={
-          <ProtectedRoute>
-            <DocumentUpload />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/cases/:id/analyze"
-        element={
-          <ProtectedRoute>
-            <CaseAnalyze />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/drafts/:type"
-        element={
-          <ProtectedRoute>
-            <Draft />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/me"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="*" element={<NotFound />} />
-    </Route>
+        <Route path="/cases" element={protect(<CasesList />)} />
+        <Route path="/cases/:id" element={protect(<CaseDetails />)} />
+        <Route path="/cases/:id/edit" element={protect(<CaseEdit />)} />
+        <Route path="/cases/:id/documents" element={protect(<CaseDocuments />)} />
+        <Route path="/cases/:id/documents/upload" element={protect(<DocumentUpload />)} />
+        <Route path="/cases/:id/analyze" element={protect(<CaseAnalyze />)} />
+        <Route path="/drafts/:type" element={protect(<Draft />)} />
+        <Route path="/me" element={protect(<Profile />)} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
     </Routes>
   );
 };
