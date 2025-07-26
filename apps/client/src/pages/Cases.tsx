@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 
-export const Login = () => {
+export const Cases = () => {
   const { t } = useTranslation();
   return (
     <div style={{ padding: '2rem' }}>
-      <h2>{t('login.title')}</h2>
-      <p>{t('login.text')}</p>
+      <h2>{t('cases.title')}</h2>
+      <p>...</p>
     </div>
   );
 };

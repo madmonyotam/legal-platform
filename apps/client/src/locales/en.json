@@ -1,0 +1,18 @@
+{
+  "nav": {
+    "home": "Home",
+    "login": "Login",
+    "cases": "Cases"
+  },
+  "home": {
+    "title": "Legal Platform – Client",
+    "start": "Start"
+  },
+  "login": {
+    "title": "Login",
+    "text": "Here we will build the login form..."
+  },
+  "cases": {
+    "title": "Cases"
+  }
+}
