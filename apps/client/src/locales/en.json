@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "home": "Home",
+    "cases": "Cases",
+    "profile": "Profile",
+    "login": "Login"
+  },
+  "welcome": "Legal Platform \u2013 Client",
+  "start": "Start",
+  "cases": {
+    "title": "Cases"
+  }
+}

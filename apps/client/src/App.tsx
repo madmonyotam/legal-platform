@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AppRoutes } from './routes/AppRoutes';
+import './i18n';
 
 export const App = () => (
   <Provider store={store}>

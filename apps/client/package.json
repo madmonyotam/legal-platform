@@ -19,7 +19,9 @@
     "react-i18next": "^15.6.1",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.23.1",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.1.19",
+    "i18next": "^23.8.1",
+    "react-i18next": "^13.2.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.8",
