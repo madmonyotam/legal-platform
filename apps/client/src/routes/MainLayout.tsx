@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 
 const Wrapper = styled.div`
   padding: 2rem;
@@ -15,14 +17,18 @@ const Nav = styled.nav`
   }
 `;
 
-export const MainLayout = ({ children }: { children?: ReactNode }) => (
-  <Wrapper>
-    <Nav>
-      <Link to="/">בית</Link>
-      <Link to="/cases">תיקים</Link>
-      <Link to="/me">פרופיל</Link>
-      <Link to="/login">התחברות</Link>
-    </Nav>
-    {children ?? <Outlet />}
-  </Wrapper>
-);
+export const MainLayout = ({ children }: { children?: ReactNode }) => {
+  const { t } = useTranslation();
+  return (
+    <Wrapper>
+      <Nav>
+        <Link to="/">{t('nav.home')}</Link>
+        <Link to="/cases">{t('nav.cases')}</Link>
+        <Link to="/me">{t('nav.profile')}</Link>
+        <Link to="/login">{t('nav.login')}</Link>
+        <LanguageSwitcher />
+      </Nav>
+      {children ?? <Outlet />}
+    </Wrapper>
+  );
+};
