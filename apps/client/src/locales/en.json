@@ -1,0 +1,17 @@
+{
+  "nav": {
+    "home": "Home",
+    "cases": "Cases",
+    "profile": "Profile",
+    "login": "Login"
+  },
+  "welcome": "Legal Platform – Client",
+  "start": "Start",
+  "cases": {
+    "title": "Cases"
+  },
+  "notFound": {
+    "title": "Title",
+    "message": "Sorry, the page you are looking for does not exist."
+  }
+}

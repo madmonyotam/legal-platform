@@ -1,6 +1,6 @@
 {
   "name": "auth-service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "commonjs",
   "main": "dist/index.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "dependencies": {
     "@legal/logger": "*",
     "@legal/shared-utils": "*",
+    "firebase-admin": "^13.4.0",
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
