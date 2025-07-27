@@ -8,6 +8,12 @@ if (!process.env.JWT_SECRET) {
   throw new Error('Missing required environment variable: JWT_SECRET');
 }
 
+if (!process.env.FIREBASE_API_KEY) {
+  throw new Error('Missing required environment variable: FIREBASE_API_KEY');
+}
+
+
 export const PORT = process.env.PORT ?? 8081;
 export const JWT_SECRET = process.env.JWT_SECRET.trim();
 export const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN?.trim() ?? '1h';
+export const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY.trim();
