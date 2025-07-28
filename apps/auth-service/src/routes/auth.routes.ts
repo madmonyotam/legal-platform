@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { catchAsync } from '@legal/shared-utils';
-import { health, login, me, validate } from '../controllers/auth.controller';
+import { health, me, validate } from '../controllers/auth.controller';
 import { register } from '../controllers/register.controller';
+import { login } from '../controllers/login.controller';
 
 const router = Router();
 
