@@ -8,6 +8,9 @@
   "scripts": {
     "test": "jest",
     "tree": "node tree.js",
+    "prisma:generate": "prisma generate --schema=libs/db/prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema=libs/db/prisma/schema.prisma",
+    "prisma:studio": "prisma studio --schema=libs/db/prisma/schema.prisma",
     "build": "tsc --build && npm run build:client",
     "build:client": "npm run build --workspace=apps/client",
     "full-reset": "npm run clean && npm install && npm run build",
@@ -16,6 +19,7 @@
     "start": "concurrently -n case,auth,gateway,client -c blue,green,magenta,yellow \"npm run start --workspace=apps/case-service\" \"npm run start --workspace=apps/auth-service\" \"npm run start --workspace=apps/gateway\" \"npm run preview --workspace=apps/client\""
   },
   "dependencies": {
+    "@prisma/client": "^6.12.0",
     "axios": "^1.11.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
@@ -39,6 +43,7 @@
     "eslint-plugin-import": "^2.32.0",
     "jest": "^30.0.4",
     "nodemon": "^3.1.10",
+    "prisma": "^6.12.0",
     "shx": "^0.4.0",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",

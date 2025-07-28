@@ -46,4 +46,4 @@ jobs:
             --platform=managed \
             --allow-unauthenticated \
             --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
-            --set-secrets="JWT_SECRET=JWT_SECRET:latest"
+            --set-secrets="JWT_SECRET=JWT_SECRET:latest,FIREBASE_API_KEY=FIREBASE_API_KEY:latest"
