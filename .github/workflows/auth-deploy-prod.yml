@@ -48,4 +48,4 @@ jobs:
             --allow-unauthenticated \
             --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
             --set-secrets="JWT_SECRET=JWT_SECRET_PROD:latest,DATABASE_URL=DATABASE_URL:latest,FIREBASE_API_KEY=FIREBASE_API_KEY:latest,INTERNAL_SECRET=INTERNAL_SECRET_PROD:latest"
-
+            --add-cloudsql-instances=legal-platform-466208:europe-west1:legal-postgres
