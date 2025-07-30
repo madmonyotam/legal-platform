@@ -3,6 +3,8 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET, FIREBASE_API_KEY, JWT_EXPIRES_IN } from '../config';
 import { AppError } from '@legal/shared-utils';
+import { UserMetaService } from '../services/userMeta.service';
+import { UserMeta } from '@prisma/client';
 
 export const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
@@ -21,10 +23,19 @@ export const login = async (req: Request, res: Response) => {
             }
         );
 
+        const uid = data.localId;
+
+        let userMeta = await UserMetaService.getUserMeta(uid) as UserMeta;
+        if (!userMeta) {
+            throw new AppError('User metadata missing – please register first', 403);
+        }
+
         const token = jwt.sign(
             {
-                sub: data.localId,
+                uid: uid,
                 email: data.email,
+                role: userMeta.role,
+                officeId: userMeta.officeId,
             },
             JWT_SECRET,
             { expiresIn: JWT_EXPIRES_IN as any }

@@ -13,14 +13,6 @@ export const health = (_req: Request, res: Response) => {
   res.status(200).send('Auth Service is healthy');
 };
 
-export const me = async (req: Request, res: Response) => {
-  const token = getTokenFromHeader(req);
-  if (!token) throw new AppError('No token provided', 401);
-
-  const decoded = jwt.verify(token, JWT_SECRET);
-  res.json({ user: decoded });
-};
-
 export const validate = async (req: Request, res: Response) => {
   const token = getTokenFromHeader(req);
   if (!token) throw new AppError('No token provided', 401);

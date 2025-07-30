@@ -3,14 +3,8 @@
     "compilerOptions": {
         "composite": true,
         "outDir": "dist",
-        "rootDir": "src",
     },
     "include": [
-        "src"
-    ],
-    "references": [
-        {
-            "path": "../../libs/types"
-        }
+        "index.ts"
     ]
 }

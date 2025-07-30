@@ -3,14 +3,9 @@
     "compilerOptions": {
         "composite": true,
         "outDir": "dist",
-        "rootDir": "src",
+        "rootDir": "src"
     },
     "include": [
         "src"
-    ],
-    "references": [
-        {
-            "path": "../../libs/types"
-        }
     ]
 }
