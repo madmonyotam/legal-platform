@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'libs/db/**'
       - 'libs/logger/**'
       - 'libs/shared-utils/**'
       - 'apps/auth-service/**'
