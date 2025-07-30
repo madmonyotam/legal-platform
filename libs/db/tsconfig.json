@@ -3,9 +3,10 @@
     "compilerOptions": {
         "composite": true,
         "outDir": "dist",
+        "rootDir": "src",
+        "declaration": true,
     },
     "include": [
-        "index.ts",
-        "prisma",
+        "src"
     ]
 }
