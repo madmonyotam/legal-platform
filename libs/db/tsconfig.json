@@ -5,6 +5,7 @@
         "outDir": "dist",
     },
     "include": [
-        "index.ts"
+        "index.ts",
+        "prisma",
     ]
 }
