@@ -43,3 +43,6 @@ coverage/
 
 # secrets
 .secrets/
+
+# scripts
+scripts/reset-database-url.ps1
