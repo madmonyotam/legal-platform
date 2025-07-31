@@ -45,6 +45,13 @@ app.get('debug/ping', async (req, res) => {
   res.send({ reachable: ok });
 });
 
+app.get('/debug/prisma', (req, res) => {
+  res.send({
+    DATABASE_URL: process.env.DATABASE_URL,
+    env: process.env,
+  });
+});
+
 app.get('/auth/debug/ip', async (req, res) => {
   try {
     const ip = await fetch('https://api.ipify.org').then(r => r.text());
