@@ -16,10 +16,13 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 
-app.get('/debug/env', (req, res) => {
-  res.send({
-    DATABASE_URL: process.env.DATABASE_URL,
-  });
+app.get('/auth/debug/ip', async (req, res) => {
+  try {
+    const ip = await fetch('https://api.ipify.org').then(r => r.text());
+    res.send(`Egress IP: ${ip}`);
+  } catch (err) {
+    res.status(500).send('Failed to detect IP');
+  }
 });
 
 app.use(errorHandler);
