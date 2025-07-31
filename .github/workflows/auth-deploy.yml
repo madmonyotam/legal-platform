@@ -2,7 +2,7 @@ name: Deploy auth-service to Cloud Run
 
 on:
   push:
-    branches: [main,sql-connect]
+    branches: [main]
     paths:
       - 'libs/db/**'
       - 'libs/logger/**'
