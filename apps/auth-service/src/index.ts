@@ -9,7 +9,7 @@ dotenv.config();
 
 import net from 'net';
 
-export function testPostgresPort(host: string, port: number): Promise<boolean> {
+const testPostgresPort = (host: string, port: number): Promise<boolean> => {
   return new Promise((resolve) => {
     const socket = new net.Socket();
     const timeout = 3000;
@@ -40,7 +40,7 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 
-app.get('auth/debug/ping-db', async (req, res) => {
+app.get('debug/ping', async (req, res) => {
   const ok = await testPostgresPort('35.195.33.117', 5432);
   res.send({ reachable: ok });
 });
