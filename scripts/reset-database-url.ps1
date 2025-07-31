@@ -11,7 +11,7 @@ if (-not (Test-Path ".secrets")) {
 
 # ✍️ כתיבה לקובץ ללא BOM וללא newline
 $writer = New-Object System.IO.StreamWriter $SECRET_FILE, $false, (New-Object System.Text.UTF8Encoding $false)
-$writer.Write("postgresql://admin:1qazXSW%403edcVFR%24@35.195.33.117:5432/legal?schema=public")
+$writer.Write("postgresql://admin:1qazXSW%403edcVFR%24@35.195.33.117:5432/legal?schema=public&sslmode=require")
 $writer.Close()
 
 # מחיקת הסוד הקודם (אם קיים)
