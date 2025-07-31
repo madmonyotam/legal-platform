@@ -7,6 +7,30 @@ import { logger, requestContext, errorHandler } from '@legal/logger';
 
 dotenv.config();
 
+import net from 'net';
+
+export function testPostgresPort(host: string, port: number): Promise<boolean> {
+  return new Promise((resolve) => {
+    const socket = new net.Socket();
+    const timeout = 3000;
+
+    socket.setTimeout(timeout);
+    socket.on('connect', () => {
+      socket.destroy();
+      resolve(true);
+    });
+    socket.on('timeout', () => {
+      socket.destroy();
+      resolve(false);
+    });
+    socket.on('error', () => {
+      resolve(false);
+    });
+
+    socket.connect(port, host);
+  });
+}
+
 const app = express();
 
 app.use(requestContext('auth-service'));
@@ -15,6 +39,11 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/auth', authRoutes);
+
+app.get('auth/debug/ping-db', async (req, res) => {
+  const ok = await testPostgresPort('35.195.33.117', 5432);
+  res.send({ reachable: ok });
+});
 
 app.get('/auth/debug/ip', async (req, res) => {
   try {
