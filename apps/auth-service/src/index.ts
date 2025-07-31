@@ -40,7 +40,7 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 
-app.get('debug/ping', async (req, res) => {
+app.get('/debug/ping', async (req, res) => {
   const ok = await testPostgresPort('35.195.33.117', 5432);
   res.send({ reachable: ok });
 });
