@@ -16,9 +16,10 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 
-app.get('/auth/debug/ip', async (req, res) => {
-  const ip = await fetch('https://api.ipify.org').then(r => r.text());
-  res.send(`Cloud Run Egress IP: ${ip}`);
+app.get('/debug/env', (req, res) => {
+  res.send({
+    DATABASE_URL: process.env.DATABASE_URL,
+  });
 });
 
 app.use(errorHandler);
