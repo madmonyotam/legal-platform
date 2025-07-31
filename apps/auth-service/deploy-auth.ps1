@@ -28,6 +28,4 @@ gcloud run deploy $SERVICE_NAME `
   --platform managed `
   --allow-unauthenticated `
   --service-account $SERVICE_ACCOUNT `
-  --set-secrets="JWT_SECRET=JWT_SECRET:latest,DATABASE_URL=DATABASE_URL:latest,FIREBASE_API_KEY=FIREBASE_API_KEY:latest,INTERNAL_SECRET=INTERNAL_SECRET:latest" `
-  --vpc-connector=cloud-run-connector `
-  --vpc-egress=all-traffic
+  --set-secrets="JWT_SECRET=JWT_SECRET:latest,DATABASE_URL=DATABASE_URL:latest,FIREBASE_API_KEY=FIREBASE_API_KEY:latest,INTERNAL_SECRET=INTERNAL_SECRET:latest"
