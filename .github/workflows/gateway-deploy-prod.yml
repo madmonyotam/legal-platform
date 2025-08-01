@@ -4,10 +4,12 @@ on:
   push:
     branches: [prod]
     paths:
-      - 'libs/logger/**'
-      - 'libs/shared-utils/**'
+      - 'libs/**'
       - 'apps/gateway/**'
-      - '.github/workflows/gateway-deploy-prod.yml'
+      - 'apps/ai-service/**'
+      - 'apps/auth-service/**'
+      - 'apps/case-service/**'
+      - '.github/workflows/gateway-deploy.yml'
 
 jobs:
   deploy:

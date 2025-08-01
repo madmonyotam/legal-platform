@@ -45,4 +45,5 @@ jobs:
             --region=europe-west1 \
             --platform=managed \
             --allow-unauthenticated \
-            --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com
+            --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
+            --set-secrets="INTERNAL_SECRET=INTERNAL_SECRET:latest"

@@ -4,9 +4,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'libs/logger/**'
-      - 'libs/shared-utils/**'
+      - 'libs/**'
       - 'apps/gateway/**'
+      - 'apps/ai-service/**'
+      - 'apps/auth-service/**'
+      - 'apps/case-service/**'
       - '.github/workflows/gateway-deploy.yml'
 
 jobs:
