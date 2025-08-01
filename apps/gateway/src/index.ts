@@ -4,7 +4,7 @@ import { logger, requestContext } from '@legal/logger';
 import { errorHandler } from '@legal/logger';
 import { AppError } from '@legal/shared-utils';
 import { authenticate } from './middleware/auth.middleware';
-import { AUTH_SERVICE_URL, CASE_SERVICE_URL, INTERNAL_SECRET, PORT } from './config';
+import { AI_SERVICE_URL, AUTH_SERVICE_URL, CASE_SERVICE_URL, INTERNAL_SECRET, PORT } from './config';
 
 const app = express();
 
@@ -28,6 +28,29 @@ app.get('/api/cases', authenticate, async (req, res, next) => {
     if (!response.ok) {
       const errorBody = await response.json();
       return next(new AppError('Case service error', response.status, true, errorBody));
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/api/ai', authenticate, async (req, res, next) => {
+  try {
+    const response = await fetch(`${AI_SERVICE_URL}/ai`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': req.headers.authorization!,
+        'x-internal-auth': INTERNAL_SECRET
+      }
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.json();
+      return next(new AppError('Ai service error', response.status, true, errorBody));
     }
 
     const data = await response.json();

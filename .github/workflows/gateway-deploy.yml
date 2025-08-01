@@ -48,5 +48,5 @@ jobs:
             --platform=managed \
             --allow-unauthenticated \
             --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
-            --set-env-vars "AUTH_SERVICE_URL=https://auth-service-423226444985.europe-west1.run.app,CASE_SERVICE_URL=https://case-service-423226444985.europe-west1.run.app" \
+            --set-env-vars "AUTH_SERVICE_URL=https://auth-service-423226444985.europe-west1.run.app,CASE_SERVICE_URL=https://case-service-423226444985.europe-west1.run.app,AI_SERVICE_URL=https://ai-service-423226444985.europe-west1.run.app" \
             --set-secrets "INTERNAL_SECRET=INTERNAL_SECRET:latest"

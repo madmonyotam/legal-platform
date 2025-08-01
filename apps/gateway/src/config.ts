@@ -9,3 +9,4 @@ export const PORT = process.env.PORT ?? 8080;
 export const INTERNAL_SECRET = process.env.INTERNAL_SECRET.trim();
 export const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://localhost:8081';
 export const CASE_SERVICE_URL = process.env.CASE_SERVICE_URL || 'http://localhost:8082';
+export const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://localhost:8083';
