@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@legal/logger": "*",
-    "@legal/shared-utils": "*"
+    "@legal/shared-utils": "*",
+    "@legal/types": "*"
   }
 }

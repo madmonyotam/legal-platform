@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { AUTH_SERVICE_URL } from '../config';
 import { setContext, logger, getContext } from '@legal/logger';
 import { AppError } from '@legal/shared-utils';
+import { AuthUser } from '@legal/types';
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization;
@@ -26,14 +27,17 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     }
 
     const data = await response.json();
-    if (!data.valid) {
+
+    if (!data.valid || !data.user) {
       return next(new AppError('Invalid token', 401));
     }
 
-    (req as any).user = data.user;
-    setContext({ ...getContext(), userId: data.user?.id });
+    const user = data.user as AuthUser;
+    req.user = user;
 
-    logger.info('Token validated successfully', { userId: data.user?.id, path });
+    setContext({ ...getContext(), userId: user.uid });
+
+    logger.info('Token validated successfully', { userId: user.uid, path });
     next();
   } catch (err) {
     next(new AppError('Auth service error', 500, false, err));

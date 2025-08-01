@@ -2,6 +2,12 @@
     "files": [],
     "references": [
         {
+            "path": "libs/types"
+        },
+        {
+            "path": "libs/db"
+        },
+        {
             "path": "libs/shared-utils"
         },
         {

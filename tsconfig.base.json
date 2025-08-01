@@ -8,7 +8,8 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "types": [
-            "node"
+            "node",
+            "@legal/types/src/express.d.ts",
         ],
         "resolveJsonModule": true,
         "baseUrl": ".",

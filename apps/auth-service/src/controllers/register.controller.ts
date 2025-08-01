@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
-import { firebaseAuth } from '../utils/firebase';
+import { v4 as uuid } from 'uuid';
 import { AppError } from '@legal/shared-utils';
+import { firebaseAuth } from '../utils/firebase';
+import { UserMetaService } from '../services/userMeta.service';
 
 export const register = async (req: Request, res: Response) => {
     const { email, password } = req.body;
@@ -12,11 +14,20 @@ export const register = async (req: Request, res: Response) => {
     try {
         const user = await firebaseAuth.createUser({ email, password });
 
-        // בהמשך נוכל לשמור גם role, officeId וכו' במסד
+        const now = new Date();
+        const officeId = `office-${uuid()}`;
 
-        res.status(201).json({ uid: user.uid, email: user.email });
+        const userMeta = await UserMetaService.createUserMeta({
+            uid: user.uid,
+            role: 'owner',
+            officeId,
+            invitedBy: null,
+            createdAt: now,
+            updatedAt: now,
+        });
+
+        res.status(201).json({ uid: user.uid, email: user.email, userMeta });
     } catch (error: any) {
-        // טיפול בשגיאות נפוצות מ-Firebase
         if (error.code === 'auth/email-already-exists') {
             throw new AppError('Email already in use', 409);
         }

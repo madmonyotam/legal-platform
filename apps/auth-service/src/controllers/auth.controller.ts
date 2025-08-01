@@ -13,22 +13,6 @@ export const health = (_req: Request, res: Response) => {
   res.status(200).send('Auth Service is healthy');
 };
 
-export const login = async (req: Request, res: Response) => {
-  const { username } = req.body;
-  if (!username) throw new AppError('Missing username', 400);
-
-  const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN as any });
-  res.json({ token });
-};
-
-export const me = async (req: Request, res: Response) => {
-  const token = getTokenFromHeader(req);
-  if (!token) throw new AppError('No token provided', 401);
-
-  const decoded = jwt.verify(token, JWT_SECRET);
-  res.json({ user: decoded });
-};
-
 export const validate = async (req: Request, res: Response) => {
   const token = getTokenFromHeader(req);
   if (!token) throw new AppError('No token provided', 401);

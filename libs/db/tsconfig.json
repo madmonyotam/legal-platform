@@ -4,13 +4,9 @@
         "composite": true,
         "outDir": "dist",
         "rootDir": "src",
+        "declaration": true,
     },
     "include": [
         "src"
-    ],
-    "references": [
-        {
-            "path": "../../libs/types"
-        }
     ]
 }
