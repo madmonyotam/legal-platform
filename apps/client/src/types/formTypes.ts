@@ -1,0 +1,76 @@
+// טיפוס לשדה קלט גנרי
+export interface InputField {
+    type: 'input';
+    setPath: string;
+    getPath?: string; // ברירת מחדל: זהה ל־setPath
+    label: string;
+    inputType: 'text' | 'number' | 'email' | 'password' | 'date' | 'checkbox' | 'select';
+    options?: { value: string; label: string }[] | ((context: any) => { value: string; label: string }[]);
+    placeholder?: string;
+    required?: boolean;
+
+    validation?: {
+        min?: number;
+        max?: number;
+        length?: number;
+        matches?: RegExp;
+        email?: boolean;
+        customMessage?: string;
+    };
+
+    extraProps?: Record<string, any>;
+}
+
+// תנאי לתצוגת Section
+export interface DisplayCondition {
+    path: string;
+    operator: 'equals' | 'notEquals' | 'in' | 'notIn' | 'exists' | 'notExists';
+    value?: any;
+}
+
+// סוגי תצוגה ל־Section
+export type SectionVariant =
+    | 'vertical'
+    | 'horizontal'
+    | 'grid'
+    | 'condition'
+    | 'collapsible'
+    | 'tab'
+    | 'step';
+
+// טיפוס ל־Section
+export interface Section {
+    type: 'section';
+    title?: string;
+    description?: string;
+    variant?: SectionVariant;
+    condition?: DisplayCondition | DisplayCondition[];
+    children: FormElement[];
+    extraProps?: Record<string, any>;
+}
+
+// אלמנט כללי בטופס
+export type FormElement = Section | InputField;
+
+// הסכמה הכללית של הטופס
+export interface FormSchema {
+    elements: FormElement[];
+    stepForm?: boolean;
+    submitLabel?: string;
+    showResetButton?: boolean;
+    validationMode?: 'onSubmit' | 'onBlur' | 'onChange';
+    autoScrollToError?: boolean;
+    containerStyle?: React.CSSProperties;
+    customValidation?: any; // Yup.ObjectSchema אופציונלי
+}
+
+// פרופס ל־GenericForm
+export interface GenericFormProps {
+    schema: FormSchema;
+    onSubmit: (values: any) => void;
+    initialValues: Record<string, any>;
+    readonly?: boolean;
+    currentStep?: number;
+    onStepChange?: (index: number) => void;
+    isNew?: boolean;
+}

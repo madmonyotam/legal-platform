@@ -1,5 +1,5 @@
 import type { DefaultTheme } from 'styled-components';
-import { merge } from 'lodash';
+import { merge } from 'lodash-es';
 
 export const themeBase = {
   font: {
