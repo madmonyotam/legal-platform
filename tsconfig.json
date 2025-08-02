@@ -17,6 +17,9 @@
             "path": "apps/auth-service"
         },
         {
+            "path": "apps/ai-service"
+        },
+        {
             "path": "apps/case-service"
         },
         {
