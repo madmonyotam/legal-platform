@@ -23,7 +23,7 @@ const options: swaggerJsdoc.Options = {
       },
     ],
   },
-  apis: [ './src/index.ts', './src/routes/*.ts' ], // files containing annotations
+  apis: [ './src/index.ts' ],
 };
 
 export const swaggerSpec = swaggerJsdoc(options); 
