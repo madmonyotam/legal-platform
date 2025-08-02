@@ -16,8 +16,54 @@ app.use(cors());
 app.use(express.json());
 app.use(requestContext('gateway'));
 
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     summary: Health check
+ *     description: Returns a message indicating that the gateway is healthy.
+ *     responses:
+ *       200:
+ *         description: Gateway is healthy
+ */
 app.get('/health', (_, res) => res.send('Gateway is healthy'));
 
+/**
+ * @swagger
+ * /test-docs:
+ *   get:
+ *     summary: A simple test endpoint
+ *     description: This is to verify if swagger-jsdoc is working.
+ *     responses:
+ *       200:
+ *         description: Returns a success message.
+ */
+app.get('/test-docs', (req, res) => {
+  res.json({ message: 'Docs test successful' });
+});
+
+/**
+ * @swagger
+ * /api/cases:
+ *   get:
+ *     summary: Get all cases
+ *     description: Retrieves a list of all cases from the case service. This endpoint requires authentication.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of cases.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Case service error
+ */
 app.get('/api/cases', authenticate, async (req, res, next) => {
   try {
     const response = await fetch(`${CASE_SERVICE_URL}/cases`, {
