@@ -7,11 +7,10 @@ interface Props {
     schema: FormSchema;
     initialValues: Record<string, any>;
     onSubmit: (values: any, helpers: FormikHelpers<any>) => void | Promise<void>;
-    readonly?: boolean;
     isNew?: boolean;
 }
 
-export const StepperForm = ({ schema, initialValues, onSubmit, readonly, isNew }: Props) => {
+export const StepperForm = ({ schema, initialValues, onSubmit, isNew }: Props) => {
     const steps = schema.elements.filter(
         (el): el is Section => el.type === 'section' && el.variant === 'step'
     );
@@ -67,20 +66,18 @@ export const StepperForm = ({ schema, initialValues, onSubmit, readonly, isNew }
                 onSubmit={(values) => handleSubmit(values, {} as FormikHelpers<any>)}
                 currentStep={stepIndex}
                 onStepChange={setStepIndex}
-                readonly={readonly}
                 isNew={isNew}
             />
 
-            {!readonly && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
-                    <button onClick={handleBack} disabled={isFirst}>
-                        הקודם
-                    </button>
-                    <button type="submit" form="form">
-                        {isLast ? 'סיום' : 'הבא'}
-                    </button>
-                </div>
-            )}
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+                <button onClick={handleBack} disabled={isFirst}>
+                    הקודם
+                </button>
+                <button type="submit" form="form">
+                    {isLast ? 'סיום' : 'הבא'}
+                </button>
+            </div>
+
         </div>
     );
 };

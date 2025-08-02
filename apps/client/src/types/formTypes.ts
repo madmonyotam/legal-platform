@@ -66,7 +66,6 @@ export interface GenericFormProps {
     schema: FormSchema;
     onSubmit: (values: any) => void;
     initialValues: Record<string, any>;
-    readonly?: boolean;
     currentStep?: number;
     onStepChange?: (index: number) => void;
     isNew?: boolean;

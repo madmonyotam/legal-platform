@@ -12,7 +12,7 @@ const renderElements = (elements: FormElement[]) => {
     });
 };
 
-export const GenericForm = ({ schema, onSubmit, initialValues, ...props }: GenericFormProps) => {
+export const GenericForm = ({ schema, onSubmit, initialValues }: GenericFormProps) => {
     const validationSchema = schema.customValidation || buildValidationSchema(schema.elements);
 
     return (
