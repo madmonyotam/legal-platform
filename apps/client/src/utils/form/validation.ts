@@ -1,20 +1,24 @@
 import * as Yup from 'yup';
+import { set } from 'lodash-es';
 import type { FormElement, InputField } from '../../types/formTypes';
 
-export const buildValidationSchema = (elements: FormElement[]) => {
+// בניית אובייקט schema עם setPath (כולל נקודות)
+const collectShape = (elements: FormElement[]): Record<string, any> => {
     const shape: Record<string, any> = {};
 
     for (const element of elements) {
         if (element.type === 'section') {
-            Object.assign(shape, buildValidationSchema(element.children));
+            const nested = collectShape(element.children);
+            for (const key in nested) {
+                set(shape, key, nested[key]);
+            }
         }
 
         if (element.type === 'input') {
-            const field = element as InputField;
-            const path = field.setPath;
+            const { setPath, inputType, required, validation } = element as InputField;
             let validator: Yup.AnySchema;
 
-            switch (field.inputType) {
+            switch (inputType) {
                 case 'text':
                 case 'email':
                 case 'password':
@@ -34,23 +38,54 @@ export const buildValidationSchema = (elements: FormElement[]) => {
                     validator = Yup.mixed();
             }
 
-            if (field.required) {
+            if (required) {
                 validator = validator.required('שדה חובה');
             }
 
-            const v = field.validation;
-            if (field.inputType === 'email') {
+            if (inputType === 'email') {
                 validator = (validator as Yup.StringSchema).email('דוא"ל לא תקין');
             }
 
-            if (v?.min !== undefined) validator = (validator as any).min(v.min);
-            if (v?.max !== undefined) validator = (validator as any).max(v.max);
-            if (v?.length !== undefined) validator = (validator as any).length(v.length);
-            if (v?.matches) validator = (validator as Yup.StringSchema).matches(v.matches);
+            if (validation?.min !== undefined) {
+                validator = (validator as any).min(validation.min);
+            }
 
-            shape[path] = validator;
+            if (validation?.max !== undefined) {
+                validator = (validator as any).max(validation.max);
+            }
+
+            if (validation?.length !== undefined) {
+                validator = (validator as any).length(validation.length);
+            }
+
+            if (validation?.matches) {
+                validator = (validator as Yup.StringSchema).matches(validation.matches);
+            }
+
+            set(shape, setPath, validator); // 🔑 תמיכה ב־address.street
+        }
+    }
+
+    return shape;
+};
+
+// 🧬 המרה לעץ Yup אמיתי
+const toYupObject = (obj: any): Yup.ObjectSchema<any> => {
+    const shape: Record<string, any> = {};
+
+    for (const key in obj) {
+        const value = obj[key];
+        if (Yup.isSchema(value)) {
+            shape[key] = value;
+        } else if (typeof value === 'object' && value !== null) {
+            shape[key] = toYupObject(value);
         }
     }
 
     return Yup.object().shape(shape);
+};
+
+export const buildValidationSchema = (elements: FormElement[]) => {
+    const rawShape = collectShape(elements);   // עץ רגיל עם ולידציות
+    return toYupObject(rawShape);              // המרה ל־Yup אמיתי
 };

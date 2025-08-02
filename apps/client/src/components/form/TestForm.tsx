@@ -2,6 +2,10 @@ import type { FormSchema } from '../../types/formTypes';
 import { GenericForm } from './GenericForm';
 
 const formSchema: FormSchema = {
+    mode: 'wizard',
+    submitLabel: 'שלח',
+    validationMode: 'onBlur',
+    containerStyle: { maxWidth: '600px', margin: '0 auto' },
     elements: [
         {
             type: 'section',

@@ -38,7 +38,6 @@ export type SectionVariant =
     | 'tab'
     | 'step';
 
-// טיפוס ל־Section
 export interface Section {
     type: 'section';
     title?: string;
@@ -52,16 +51,17 @@ export interface Section {
 // אלמנט כללי בטופס
 export type FormElement = Section | InputField;
 
-// הסכמה הכללית של הטופס
+export type FormMode = 'default' | 'wizard';
+
 export interface FormSchema {
+    mode?: FormMode;
     elements: FormElement[];
     submitLabel?: string;
-    validationMode?: 'onSubmit' | 'onBlur' | 'onChange';
+    validationMode?: 'onBlur' | 'onChange';
     containerStyle?: React.CSSProperties;
     customValidation?: any;
 }
 
-// פרופס ל־GenericForm
 export interface GenericFormProps {
     schema: FormSchema;
     onSubmit: (values: any) => void;
