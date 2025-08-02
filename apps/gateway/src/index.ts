@@ -5,8 +5,12 @@ import { errorHandler } from '@legal/logger';
 import { AppError } from '@legal/shared-utils';
 import { authenticate } from './middleware/auth.middleware';
 import { AI_SERVICE_URL, AUTH_SERVICE_URL, CASE_SERVICE_URL, INTERNAL_SECRET, PORT } from './config';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swagger';
 
 const app = express();
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(cors());
 app.use(express.json());
