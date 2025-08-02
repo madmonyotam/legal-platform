@@ -1,0 +1,49 @@
+name: Deploy ai-service (prod) to Cloud Run
+
+on:
+  push:
+    branches: [prod]
+    paths:
+      - 'libs/logger/**'
+      - 'libs/shared-utils/**'
+      - 'apps/ai-service/**'
+      - '.github/workflows/ai-deploy-prod.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: legal-platform-466208
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker europe-west1-docker.pkg.dev
+
+      - name: Build and push Docker image (prod)
+        run: |
+          docker build -f apps/ai-service/Dockerfile \
+            -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/ai-service:prod \
+            .
+          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/ai-service:prod
+
+      - name: Deploy to Cloud Run (prod)
+        run: |
+          gcloud run deploy ai-service-prod \
+            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/ai-service:prod \
+            --project=legal-platform-466208 \
+            --region=europe-west1 \
+            --platform=managed \
+            --allow-unauthenticated \
+            --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
+            --set-secrets="INTERNAL_SECRET=INTERNAL_SECRET_PROD:latest"

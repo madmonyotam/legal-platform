@@ -6,5 +6,8 @@
     "scripts": {
         "build": "tsc"
     },
-    "private": true
+    "private": true,
+    "dependencies": {
+        "@legal/types": "*"
+    }
 }
