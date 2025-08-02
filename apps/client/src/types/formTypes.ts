@@ -55,13 +55,10 @@ export type FormElement = Section | InputField;
 // הסכמה הכללית של הטופס
 export interface FormSchema {
     elements: FormElement[];
-    stepForm?: boolean;
     submitLabel?: string;
-    showResetButton?: boolean;
     validationMode?: 'onSubmit' | 'onBlur' | 'onChange';
-    autoScrollToError?: boolean;
     containerStyle?: React.CSSProperties;
-    customValidation?: any; // Yup.ObjectSchema אופציונלי
+    customValidation?: any;
 }
 
 // פרופס ל־GenericForm

@@ -1,12 +1,30 @@
 import { useFormikContext } from 'formik';
 import { get } from 'lodash-es';
+import styled from 'styled-components';
 import type { Section, FormElement, DisplayCondition, SectionVariant } from '../../types/formTypes';
 import { FieldRenderer } from './FieldRenderer';
-import type { JSX } from 'react';
+import { CollapsibleSection } from './sections/CollapsibleSection';
 
 interface Props {
     section: Section;
 }
+
+const VerticalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const HorizontalContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+`;
 
 const evaluateCondition = (
     condition: DisplayCondition | DisplayCondition[] | undefined,
@@ -37,23 +55,14 @@ const evaluateCondition = (
     });
 };
 
-const variantMap: Record<SectionVariant, (children: React.ReactNode, section: Section) => JSX.Element> = {
-    vertical: (children) => (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>{children}</div>
-    ),
-    horizontal: (children) => <div style={{ display: 'flex', gap: '1rem' }}>{children}</div>,
-    grid: (children) => (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>{children}</div>
-    ),
-    collapsible: (children, section) => (
-        <details>
-            <summary>{section.title}</summary>
-            {children}
-        </details>
-    ),
-    tab: (children) => <div>{children}</div>,
-    step: (children) => <div>{children}</div>,
-    condition: (children) => <div>{children}</div>,
+const variantMap: Record<SectionVariant, React.ElementType> = {
+    vertical: VerticalContainer,
+    horizontal: HorizontalContainer,
+    grid: GridContainer,
+    collapsible: CollapsibleSection,
+    tab: 'div',
+    step: 'div',
+    condition: 'div',
 };
 
 export const SectionRenderer = ({ section }: Props) => {
@@ -67,12 +76,16 @@ export const SectionRenderer = ({ section }: Props) => {
         return null;
     });
 
-    const renderVariant = variantMap[section.variant ?? 'vertical'];
+    const CurrentSection = variantMap[section.variant ?? 'vertical'];
+
+    if (section.variant === 'collapsible') {
+        return <CurrentSection section={section}>{children}</CurrentSection>;
+    }
 
     return (
         <div style={section.extraProps}>
-            {section.variant !== 'collapsible' && section.title && <h4>{section.title}</h4>}
-            {renderVariant(children, section)}
+            {section.title && <h4>{section.title}</h4>}
+            <CurrentSection>{children}</CurrentSection>
         </div>
     );
 };
