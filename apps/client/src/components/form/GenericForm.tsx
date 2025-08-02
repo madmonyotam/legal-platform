@@ -23,7 +23,7 @@ export const GenericForm = ({ schema, onSubmit, initialValues }: GenericFormProp
             validateOnBlur={schema.validationMode === 'onBlur'}
             validateOnChange={schema.validationMode === 'onChange'}
         >
-            <Form style={schema.containerStyle}>
+            <Form style={schema.containerStyle} id="form">
                 {renderElements(schema.elements)}
                 {schema.submitLabel && <button type="submit">{schema.submitLabel}</button>}
             </Form>
