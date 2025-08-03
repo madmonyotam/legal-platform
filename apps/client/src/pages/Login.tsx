@@ -16,26 +16,34 @@ export const Login = () => {
   const loginSchema: FormSchema = {
     mode: 'default',
     submitLabel: isLoading ? t('auth.logging_in') : t('auth.login'),
+    containerStyle: { maxWidth: '600px', margin: '0 auto' },
     validationMode: 'onBlur',
     elements: [
       {
-        type: 'input',
-        setPath: 'email',
-        inputType: 'email',
-        label: t('auth.email'),
-        placeholder: t('auth.email_placeholder'),
-        required: true
-      },
-      {
-        type: 'input',
-        setPath: 'password',
-        inputType: 'password',
-        label: t('auth.password'),
-        placeholder: t('auth.password_placeholder'),
-        required: true,
-        validation: {
-          min: 6
-        }
+        type: 'section',
+        variant: 'vertical',
+        title: t('auth.login_title'),
+        children: [
+          {
+            type: 'input',
+            setPath: 'email',
+            inputType: 'email',
+            label: t('auth.email'),
+            placeholder: t('auth.email_placeholder'),
+            required: true
+          },
+          {
+            type: 'input',
+            setPath: 'password',
+            inputType: 'password',
+            label: t('auth.password'),
+            placeholder: t('auth.password_placeholder'),
+            required: true,
+            validation: {
+              min: 6
+            }
+          }
+        ]
       }
     ]
   };
@@ -46,13 +54,12 @@ export const Login = () => {
 
   return (
     <Page>
-      <h2>{t('auth.login_title')}</h2>
       <GenericForm
         schema={loginSchema}
         initialValues={{ email: '', password: '' }}
         onSubmit={handleSubmit}
       />
-      {error && <div style={{color: 'red'}}>{error}</div>}
+      {error && <div style={{ color: 'red' }}>{error}</div>}
     </Page>
   );
 };
