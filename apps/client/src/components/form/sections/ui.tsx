@@ -3,10 +3,8 @@ import styled from "styled-components";
 export const Button = styled.button`
     background: ${({ theme }) => theme.colors.primary};
     color: white;
-    padding: ${({ theme }) => {
-        console.log('Spacing:', theme.spacing);
-        return `${theme.spacing.sm} ${theme.spacing.md}`;
-    }};
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+    };
     border: none;
     border-radius: ${({ theme }) => theme.radii.md};
     font-weight: 500;
