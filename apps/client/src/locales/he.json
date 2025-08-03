@@ -13,5 +13,13 @@
   "notFound": {
     "title": "דף לא נמצא",
     "message": "מצטערים, הדף שחיפשת לא קיים."
+  },
+  "form": {
+    "select": {
+      "placeholder": "בחר"
+    },
+    "prev": "חזור",
+    "next": "הבא",
+    "submit": "שלח"
   }
 }
