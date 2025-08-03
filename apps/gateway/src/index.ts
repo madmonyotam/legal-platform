@@ -2,13 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import { logger, requestContext } from '@legal/logger';
 import { errorHandler } from '@legal/logger';
-import { AppError } from '@legal/shared-utils';
+import { AppError, corsMiddleware } from '@legal/shared-utils';
 import { authenticate } from './middleware/auth.middleware';
 import { AI_SERVICE_URL, AUTH_SERVICE_URL, CASE_SERVICE_URL, INTERNAL_SECRET, PORT } from './config';
 
 const app = express();
 
-app.use(cors());
+app.use(corsMiddleware);
 app.use(express.json());
 app.use(requestContext('gateway'));
 

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { API_URL, USE_MOCK } from '../config/env';
 import { store } from '../store';
-import { config } from 'dotenv';
 
 // axios instance
 const apiClient = axios.create({
@@ -16,7 +15,7 @@ apiClient.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    return config;  
+    return config;
   },
   (error) => {
     return Promise.reject(error);
@@ -30,7 +29,7 @@ apiClient.interceptors.response.use(
   },
   (error) => {
     console.error('API Error:', error.response?.data || error.message);
-    
+
     if (error.response?.status === 401) {
       console.log('Unauthorized - token might be invalid');
     }
@@ -41,6 +40,6 @@ apiClient.interceptors.response.use(
 export const api = USE_MOCK
   ? {
     get: async (url: string) => ({ data: `MOCK GET ${url}` }),
-    post: async (url: string, data: any) => ({ data: `MOCK POST ${url}` }),
+    post: async (url: string, _data: any) => ({ data: `MOCK POST ${url}` }),
   }
   : apiClient;

@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import { api } from '../../api/client'; 
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { api } from '../../api/client';
 
 // User type definition
 interface User {
@@ -7,7 +7,7 @@ interface User {
     email: string;
     role: string;
     officeId: string;
-}   
+}
 
 // State type definition
 interface AuthState {
@@ -33,7 +33,7 @@ export const loginUser = createAsyncThunk(
         try {
             const response = await api.post('/auth/login', credentials);
             const { token } = response.data;
-            
+
             const tokenParts = token.split('.');
             const payload = JSON.parse(atob(tokenParts[1]));
 
@@ -46,7 +46,7 @@ export const loginUser = createAsyncThunk(
                     officeId: payload.officeId
                 }
             };
-        } catch (error: any) { 
+        } catch (error: any) {
             return rejectWithValue(error.message || 'Login failed');
         }
     }
@@ -56,9 +56,8 @@ export const validateToken = createAsyncThunk(
     'auth/validate',
     async (token: string, { rejectWithValue }) => {
         try {
-            // שליחת בקשה לשרת
-            const response = await api.post('/auth/validate', { token });
-            
+            await api.post('/auth/validate', { token });
+
             const tokenParts = token.split('.');
             const payload = JSON.parse(atob(tokenParts[1]));
             return {
@@ -70,7 +69,7 @@ export const validateToken = createAsyncThunk(
                 }
             };
         } catch (error: any) {
-            return rejectWithValue(error.response?.data?.message || 'Token validation failed');         
+            return rejectWithValue(error.response?.data?.message || 'Token validation failed');
         }
     }
 );
@@ -150,7 +149,7 @@ const authSlice = createSlice({
 });
 
 // Export actions
-export const { clearError, resetAuth } = authSlice.actions; 
+export const { clearError, resetAuth } = authSlice.actions;
 
 // Export reducer
 export default authSlice.reducer;

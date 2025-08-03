@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { JWT_EXPIRES_IN, JWT_SECRET } from '../config';
+import { JWT_SECRET } from '../config';
 import { AppError } from '@legal/shared-utils';
 
 const getTokenFromHeader = (req: Request): string | null => {
@@ -16,12 +16,12 @@ export const health = (_req: Request, res: Response) => {
 export const validate = async (req: Request, res: Response) => {
   // נסה לקבל טוקן מ-header או מ-body
   let token = getTokenFromHeader(req);
-  
+
   // אם אין ב-header, נסה ב-body
   if (!token && req.body.token) {
     token = req.body.token;
   }
-  
+
   if (!token) throw new AppError('No token provided', 401);
 
   try {
