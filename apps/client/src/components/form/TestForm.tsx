@@ -3,19 +3,19 @@ import { GenericForm } from './GenericForm';
 
 const formSchema: FormSchema = {
     mode: 'wizard',
-    submitLabel: 'שלח',
+    submitLabel: 'Submit',
     validationMode: 'onBlur',
     containerStyle: { maxWidth: '600px', margin: '0 auto' },
     elements: [
         {
             type: 'section',
-            title: 'פרטים אישיים',
+            title: 'Personal Details',
             variant: 'step',
             children: [
                 {
                     type: 'input',
                     setPath: 'firstName',
-                    label: 'שם פרטי',
+                    label: 'First Name',
                     inputType: 'text',
                     required: true,
                     validation: {
@@ -25,14 +25,14 @@ const formSchema: FormSchema = {
                 {
                     type: 'input',
                     setPath: 'lastName',
-                    label: 'שם משפחה',
+                    label: 'Last Name',
                     inputType: 'text',
                     required: true
                 },
                 {
                     type: 'input',
                     setPath: 'age',
-                    label: 'גיל',
+                    label: 'Age',
                     inputType: 'number',
                     required: true,
                     validation: {
@@ -44,7 +44,7 @@ const formSchema: FormSchema = {
         },
         {
             type: 'section',
-            title: 'כתובת',
+            title: 'Address',
             variant: 'step',
             condition: {
                 path: 'age',
@@ -55,14 +55,14 @@ const formSchema: FormSchema = {
                 {
                     type: 'input',
                     setPath: 'address.street',
-                    label: 'רחוב',
+                    label: 'Street',
                     inputType: 'text',
                     required: true
                 },
                 {
                     type: 'input',
                     setPath: 'address.city',
-                    label: 'עיר',
+                    label: 'City',
                     inputType: 'text',
                     required: true
                 }
@@ -70,13 +70,13 @@ const formSchema: FormSchema = {
         },
         {
             type: 'section',
-            title: 'פרטי יצירת קשר',
+            title: 'Contact Details',
             variant: 'step',
             children: [
                 {
                     type: 'input',
                     setPath: 'email',
-                    label: 'אימייל',
+                    label: 'Email',
                     inputType: 'email',
                     required: true,
                     validation: {
@@ -86,20 +86,20 @@ const formSchema: FormSchema = {
                 {
                     type: 'input',
                     setPath: 'phone',
-                    label: 'טלפון',
+                    label: 'Phone',
                     inputType: 'text'
                 }
             ]
         },
         {
             type: 'section',
-            title: 'הצהרות',
+            title: 'Declarations',
             variant: 'step',
             children: [
                 {
                     type: 'input',
                     setPath: 'agree',
-                    label: 'אני מסכים לתנאים',
+                    label: 'I Agree to the Terms',
                     inputType: 'checkbox',
                     required: true
                 }

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import type { Section } from '../../../types/formTypes';
 
 interface Props {
-    section: Section;
-    children: React.ReactNode;
+  section: Section;
+  children: React.ReactNode;
 }
 
 const Wrapper = styled.div`
@@ -29,15 +29,15 @@ const Content = styled.div`
 `;
 
 export const CollapsibleSection = ({ section, children }: Props) => {
-    const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(true);
 
-    return (
-        <Wrapper style={section.extraProps}>
-            <Header onClick={() => setOpen((prev) => !prev)}>
-                {section.title}
-                <span>{open ? '▾' : '▸'}</span>
-            </Header>
-            {open && <Content>{children}</Content>}
-        </Wrapper>
-    );
+  return (
+    <Wrapper style={section.extraProps?.style}>
+      <Header onClick={() => setOpen((prev) => !prev)}>
+        {section.title}
+        <span>{open ? '▾' : '▸'}</span>
+      </Header>
+      {open && <Content>{children}</Content>}
+    </Wrapper>
+  );
 };

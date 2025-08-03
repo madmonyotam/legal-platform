@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { set } from 'lodash-es';
 import type { FormElement, InputField } from '../../types/formTypes';
 
-// בניית אובייקט schema עם setPath (כולל נקודות)
+// Building a schema object with setPath (including dots)
 const collectShape = (elements: FormElement[]): Record<string, any> => {
     const shape: Record<string, any> = {};
 
@@ -39,11 +39,11 @@ const collectShape = (elements: FormElement[]): Record<string, any> => {
             }
 
             if (required) {
-                validator = validator.required('שדה חובה');
+                validator = validator.required('Required field');
             }
 
             if (inputType === 'email') {
-                validator = (validator as Yup.StringSchema).email('דוא"ל לא תקין');
+                validator = (validator as Yup.StringSchema).email('Invalid email');
             }
 
             if (validation?.min !== undefined) {
@@ -62,14 +62,14 @@ const collectShape = (elements: FormElement[]): Record<string, any> => {
                 validator = (validator as Yup.StringSchema).matches(validation.matches);
             }
 
-            set(shape, setPath, validator); // 🔑 תמיכה ב־address.street
+            set(shape, setPath, validator); // 🔑 Support for address.street
         }
     }
 
     return shape;
 };
 
-// 🧬 המרה לעץ Yup אמיתי
+// 🧬 Convert to a real Yup tree
 const toYupObject = (obj: any): Yup.ObjectSchema<any> => {
     const shape: Record<string, any> = {};
 
@@ -86,6 +86,6 @@ const toYupObject = (obj: any): Yup.ObjectSchema<any> => {
 };
 
 export const buildValidationSchema = (elements: FormElement[]) => {
-    const rawShape = collectShape(elements);   // עץ רגיל עם ולידציות
-    return toYupObject(rawShape);              // המרה ל־Yup אמיתי
+    const rawShape = collectShape(elements);   // Regular tree with validations
+    return toYupObject(rawShape);              // Convert to real Yup
 };

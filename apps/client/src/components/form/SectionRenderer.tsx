@@ -1,13 +1,27 @@
 import { useFormikContext } from 'formik';
 import { get } from 'lodash-es';
 import styled from 'styled-components';
-import type { Section, FormElement, DisplayCondition, SectionVariant } from '../../types/formTypes';
+import type { Section, DisplayCondition, SectionVariant } from '../../types/formTypes';
 import { FieldRenderer } from './FieldRenderer';
 import { CollapsibleSection } from './sections/CollapsibleSection';
 
 interface Props {
     section: Section;
 }
+
+const SectionWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.md};
+  padding-block: ${({ theme }) => theme.spacing.md};
+`;
+
+const SectionTitle = styled.h4`
+  font-size: ${({ theme }) => theme.font.size};
+  font-weight: bold;
+  margin: 0;
+  color: ${({ theme }) => theme.colors.text};
+`;
 
 const VerticalContainer = styled.div`
   display: flex;
@@ -61,8 +75,7 @@ const variantMap: Record<SectionVariant, React.ElementType> = {
     grid: GridContainer,
     collapsible: CollapsibleSection,
     tab: 'div',
-    step: 'div',
-    condition: 'div',
+    step: VerticalContainer
 };
 
 export const SectionRenderer = ({ section }: Props) => {
@@ -83,9 +96,9 @@ export const SectionRenderer = ({ section }: Props) => {
     }
 
     return (
-        <div style={section.extraProps}>
-            {section.title && <h4>{section.title}</h4>}
+        <SectionWrapper>
+            {section.title && <SectionTitle>{section.title}</SectionTitle>}
             <CurrentSection>{children}</CurrentSection>
-        </div>
+        </SectionWrapper>
     );
 };

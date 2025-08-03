@@ -5,7 +5,7 @@ export const Button = styled(motion.button)`
   background-color: ${({ theme }) => theme.colors.primary};
   color: white;
   border: none;
-  padding: 0.75rem 1.25rem;
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.lg}`};
   border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
@@ -14,8 +14,3 @@ export const Button = styled(motion.button)`
     opacity: 0.9;
   }
 `;
-
-Button.defaultProps = {
-  whileHover: { scale: 1.05 },
-  whileTap: { scale: 0.95 }
-};

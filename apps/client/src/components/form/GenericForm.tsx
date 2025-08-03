@@ -1,13 +1,22 @@
-import { Formik, Form, useFormikContext } from 'formik';
+import { Formik, Form, useFormikContext, setIn } from 'formik';
 import React, { useState } from 'react';
 import { get } from 'lodash-es';
 import type { GenericFormProps, FormElement, Section } from '../../types/formTypes';
 import { buildValidationSchema } from '../../utils/form/validation';
 import { FieldRenderer } from './FieldRenderer';
 import { SectionRenderer } from './SectionRenderer';
+import { useTranslation } from 'react-i18next';
+import { Button, NavWrapper } from './sections/ui';
 
 const getStepSections = (elements: FormElement[]): Section[] =>
     elements.filter(el => el.type === 'section' && el.variant === 'step') as Section[];
+
+const collectInputPaths = (elements: FormElement[]): string[] =>
+    elements.flatMap((el) => {
+        if (el.type === 'input') return [el.setPath];
+        if (el.type === 'section') return collectInputPaths(el.children);
+        return [];
+    });
 
 const StepNavigator = ({
     currentStep,
@@ -23,34 +32,38 @@ const StepNavigator = ({
     stepFields: string[];
 }) => {
     const formik = useFormikContext<any>();
+    const { t } = useTranslation();
 
     const handleNext = async () => {
         const formErrors = await formik.validateForm();
         const hasStepErrors = stepFields.some((path) => get(formErrors, path));
-        console.log('Current step:', stepFields);
 
-        console.log('Step validation errors:', formErrors, 'Has step errors:', hasStepErrors);
-
-        if (!hasStepErrors) {
-            setCurrentStep((s) => s + 1);
+        if (hasStepErrors) {
+            const touchedMap = stepFields.reduce((acc, path) => {
+                return setIn(acc, path, true);
+            }, {});
+            formik.setTouched(touchedMap, false);
+            return;
         }
+
+        setCurrentStep((s) => s + 1);
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+        <NavWrapper>
             {currentStep > 0 && (
-                <button type="button" onClick={() => setCurrentStep(currentStep - 1)}>
-                    הקודם
-                </button>
+                <Button type="button" onClick={() => setCurrentStep(currentStep - 1)}>
+                    {t('form.prev')}
+                </Button>
             )}
             {currentStep < totalSteps - 1 ? (
-                <button type="button" onClick={handleNext}>
-                    הבא
-                </button>
+                <Button type="button" onClick={handleNext}>
+                    {t('form.next')}
+                </Button>
             ) : (
-                <button type="submit">{submitLabel ?? 'שליחה'}</button>
+                <Button type="submit">{submitLabel ?? t('form.submit')}</Button>
             )}
-        </div>
+        </NavWrapper>
     );
 };
 
@@ -90,11 +103,7 @@ export const GenericForm = ({ schema, onSubmit, initialValues }: GenericFormProp
                         setCurrentStep={setCurrentStep}
                         totalSteps={steps.length}
                         submitLabel={schema.submitLabel}
-                        stepFields={
-                            steps[currentStep].children
-                                .filter(child => child.type === 'input')
-                                .map(child => child.setPath)
-                        }
+                        stepFields={collectInputPaths(steps[currentStep].children)}
                     />
                 )}
                 {!isWizard && schema.submitLabel && <button type="submit">{schema.submitLabel}</button>}

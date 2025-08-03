@@ -1,3 +1,5 @@
+import type { FieldInputProps } from "formik";
+
 // טיפוס לשדה קלט גנרי
 export interface InputField {
     type: 'input';
@@ -21,6 +23,13 @@ export interface InputField {
     extraProps?: Record<string, any>;
 }
 
+export interface InputComponentProps {
+    field: InputField;
+    formikField: FieldInputProps<any>;
+    context: any;
+}
+
+
 // תנאי לתצוגת Section
 export interface DisplayCondition {
     path: string;
@@ -33,7 +42,6 @@ export type SectionVariant =
     | 'vertical'
     | 'horizontal'
     | 'grid'
-    | 'condition'
     | 'collapsible'
     | 'tab'
     | 'step';

@@ -4,37 +4,37 @@ import { merge } from 'lodash-es';
 export const themeBase = {
   font: {
     family: 'Segoe UI, sans-serif',
-    size: '16px',
+    size: '1rem',
     weight: '400'
   },
   spacing: {
-    xs: '4px',
-    sm: '8px',
-    md: '16px',
-    lg: '24px',
-    xl: '32px'
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem'
   },
   radii: {
-    sm: '4px',
-    md: '8px',
-    lg: '16px'
+    sm: '0.25rem',  // 4px
+    md: '0.5rem',    // 8px
+    lg: '1rem'       // 16px
   },
   colors: {
-    background: '',
-    text: '',
-    primary: '',
-    border: '',
-    gray100: ''
+    background: '#ffffff',
+    text: '#111111',
+    primary: '#0077ff',
+    primaryHover: '#005bb5',
+    border: '#cccccc',
+    gray100: '#f0f0f0',
+    danger: '#ff4d4f',
+    success: '#52c41a',
+    warning: '#faad14',
   },
 };
 
 export const lightTheme: DefaultTheme = merge({}, themeBase, {
   colors: {
-    background: '#ffffff',
-    text: '#111111',
-    primary: '#0077ff',
     border: '#e0e0e0',
-    gray100: '#f5f5f5'
   }
 });
 
