@@ -13,7 +13,8 @@
     "prisma:studio": "prisma studio --schema=libs/db/src/prisma/schema.prisma",
     "build": "tsc --build && npm run build:client",
     "build:client": "npm run build --workspace=apps/client",
-    "full-reset": "npm run clean && npm install && prisma:generate && npm run build",
+    "init": "npm install && prisma:generate && npm run build",
+    "full-reset": "npm run clean && npm run init",
     "clean": "shx rm -rf apps/*/node_modules apps/*/dist libs/*/dist **/*.tsbuildinfo && shx rm -rf node_modules package-lock.json",
     "dev": "concurrently -n case,auth,gateway,client,ai -c blue,green,magenta,yellow,cyan \"npm run dev --workspace=apps/case-service\" \"npm run dev --workspace=apps/auth-service\" \"npm run dev --workspace=apps/gateway\" \"npm run dev --workspace=apps/client\" \"npm run dev --workspace=apps/ai-service\"",
     "start": "concurrently -n case,auth,gateway,client,ai -c blue,green,magenta,yellow,cyan \"npm run start --workspace=apps/case-service\" \"npm run start --workspace=apps/auth-service\" \"npm run start --workspace=apps/gateway\" \"npm run preview --workspace=apps/client\" \"npm run start --workspace=apps/ai-service\""

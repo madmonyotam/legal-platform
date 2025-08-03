@@ -4,7 +4,6 @@ export const Button = styled.button`
     background: ${({ theme }) => theme.colors.primary};
     color: white;
     padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
-    };
     border: none;
     border-radius: ${({ theme }) => theme.radii.md};
     font-weight: 500;
