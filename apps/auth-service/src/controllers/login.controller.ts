@@ -14,6 +14,10 @@ export const login = async (req: Request, res: Response) => {
     }
 
     try {
+        console.log('🔐 Attempting login for:', email);
+        console.log('🔗 Firebase API Key exists:', !!FIREBASE_API_KEY);
+        console.log('🔗 Firebase API Key length:', FIREBASE_API_KEY?.length);
+        
         const { data } = await axios.post(
             `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`,
             {
@@ -22,6 +26,8 @@ export const login = async (req: Request, res: Response) => {
                 returnSecureToken: true,
             }
         );
+
+        console.log('✅ Firebase login successful!');
 
         const uid = data.localId;
 
@@ -43,18 +49,31 @@ export const login = async (req: Request, res: Response) => {
 
         res.json({ token });
     } catch (error: any) {
-        const code = error.response?.data?.error?.message;
-
-        switch (code) {
-            case 'EMAIL_NOT_FOUND':
-                throw new AppError('Email not found', 404);
-            case 'INVALID_PASSWORD':
-                throw new AppError('Invalid password', 401);
-            case 'USER_DISABLED':
-                throw new AppError('User disabled', 403);
-            default:
-                console.error('Firebase login error:', code);
-                throw new AppError('Login failed', 500, false, { firebase: code });
+        console.error('🚨 Login error occurred:');
+        console.error('Error message:', error.message);
+        console.error('Error code:', error.code);
+        console.error('Error type:', typeof error);
+        console.error('Has response:', !!error.response);
+        
+        if (error.response) {
+            // שגיאה מ-Firebase API
+            console.error('Firebase API error:', error.response.data);
+            const code = error.response?.data?.error?.message;
+            
+            switch (code) {
+                case 'EMAIL_NOT_FOUND':
+                    throw new AppError('Email not found', 404);
+                case 'INVALID_PASSWORD':
+                    throw new AppError('Invalid password', 401);
+                case 'USER_DISABLED':
+                    throw new AppError('User disabled', 403);
+                default:
+                    throw new AppError('Firebase authentication failed', 500, false, { firebase: code });
+            }
+        } else {
+            // שגיאה בconnection או באקסיוס
+            console.error('Network/Connection error:', error.message);
+            throw new AppError(`Network error: ${error.message}`, 500, false, { networkError: true });
         }
     }
 };

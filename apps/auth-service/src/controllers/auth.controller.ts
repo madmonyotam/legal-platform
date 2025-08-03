@@ -14,9 +14,20 @@ export const health = (_req: Request, res: Response) => {
 };
 
 export const validate = async (req: Request, res: Response) => {
-  const token = getTokenFromHeader(req);
+  // נסה לקבל טוקן מ-header או מ-body
+  let token = getTokenFromHeader(req);
+  
+  // אם אין ב-header, נסה ב-body
+  if (!token && req.body.token) {
+    token = req.body.token;
+  }
+  
   if (!token) throw new AppError('No token provided', 401);
 
-  const decoded = jwt.verify(token, JWT_SECRET);
-  res.json({ valid: true, user: decoded });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    res.json({ valid: true, user: decoded });
+  } catch (error) {
+    throw new AppError('Invalid token', 401);
+  }
 };

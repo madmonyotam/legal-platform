@@ -6,7 +6,7 @@ import { config } from 'dotenv';
 // axios instance
 const apiClient = axios.create({
   baseURL: API_URL,
-  withCredentials: true,
+  // withCredentials: true // מבטל כרגע
 });
 
 // axios request interceptor

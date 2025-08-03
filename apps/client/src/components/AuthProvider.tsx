@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 interface AuthProviderProps {
@@ -7,12 +7,21 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const { token, validate, isAuthenticated } = useAuth(); 
+    const hasValidated = useRef(false);
+    
     useEffect(() => {
       // בדיקה אם טוקן תקף במקרה שמשתמש אינו מחובר
-      if (token && !isAuthenticated) {
+      if (token && !isAuthenticated && !hasValidated.current) {
+        console.log('🔄 Running token validation...');
+        hasValidated.current = true;
         validate(token);
       }
-    }, [token, isAuthenticated, validate]);
+      
+      // איפוס כשאין טוקן
+      if (!token) {
+        hasValidated.current = false;
+      }
+    }, [token, isAuthenticated]); // הסרנו את validate מה-dependency array
 
     return <>{children}</>;
 };

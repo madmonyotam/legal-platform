@@ -11,7 +11,13 @@ const app = express();
 
 app.use(requestContext('auth-service'));
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200 // מסייע לדפדפנים ישנים
+}));
 app.use(express.json());
 
 app.use('/auth', authRoutes);

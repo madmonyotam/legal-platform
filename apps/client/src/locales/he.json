@@ -14,6 +14,15 @@
     "title": "דף לא נמצא",
     "message": "מצטערים, הדף שחיפשת לא קיים."
   },
+  "auth": {
+    "login_title": "התחברות",
+    "login": "התחבר",
+    "logging_in": "מתחבר...",
+    "email": "אימייל",
+    "email_placeholder": "הכנס את האימייל שלך",
+    "password": "סיסמה",
+    "password_placeholder": "הכנס את הסיסמה שלך"
+  },
   "form": {
     "select": {
       "placeholder": "בחר"
