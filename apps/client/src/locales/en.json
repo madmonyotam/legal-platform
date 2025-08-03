@@ -13,5 +13,13 @@
   "notFound": {
     "title": "Title",
     "message": "Sorry, the page you are looking for does not exist."
+  },
+  "form": {
+    "select": {
+      "placeholder": "Select"
+    },
+    "prev": "Prev",
+    "next": "Next",
+    "submit": "Submit"
   }
 }
