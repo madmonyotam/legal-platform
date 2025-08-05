@@ -1,13 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import clientsRoutes from './routes/clients.routes';
-import { enforceInternalAccess } from '@legal/shared-utils';
+import { enforceInternalAccess, setupHealthRoutes } from '@legal/shared-utils';
 import { PORT } from './config';
 import { logger, requestContext, errorHandler } from '@legal/logger';
 
 const app = express();
 
 app.use(requestContext('clients-service'));
+setupHealthRoutes(app);
 
 app.use(cors());
 app.use(express.json());

@@ -1,15 +1,12 @@
 import express from 'express';
-import cors from 'cors';
 import { logger, requestContext } from '@legal/logger';
 import { errorHandler } from '@legal/logger';
-import { AppError, corsMiddleware, catchAsync } from '@legal/shared-utils';
+import { AppError, corsMiddleware, catchAsync, setupHealthRoutes } from '@legal/shared-utils';
 import { authenticate } from './middleware/auth.middleware';
 import {
   AI_SERVICE_URL,
   AUTH_SERVICE_URL,
   CASE_SERVICE_URL,
-  CLIENTS_SERVICE_URL,
-  INTERNAL_SECRET,
   PORT,
 } from './config';
 import { proxyRequest } from './utils/proxy';
@@ -19,8 +16,7 @@ const app = express();
 app.use(corsMiddleware);
 app.use(express.json());
 app.use(requestContext('gateway'));
-
-app.get('/health', (_, res) => res.send('Gateway is healthy'));
+setupHealthRoutes(app);
 
 // === Public Auth Routes ===
 
@@ -57,12 +53,6 @@ app.get('/api/cases', authenticate, catchAsync(async (req, res) => {
 
 app.get('/api/ai', authenticate, catchAsync(async (req, res) => {
   const data = await proxyRequest(req, `${AI_SERVICE_URL}/ai`, 'AI');
-  res.json(data);
-}));
-
-app.get('/api/clients/health', authenticate, catchAsync(async (req, res) => {
-  const data = await proxyRequest(req, `${CLIENTS_SERVICE_URL}/clients/health`, 'Clients');
-  logger.info('GET /clients/health - Clients service health check', { data });
   res.json(data);
 }));
 

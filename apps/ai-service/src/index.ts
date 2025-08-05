@@ -1,13 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import aiRoutes from './routes/ai.routes';  
-import { enforceInternalAccess } from '@legal/shared-utils';
+import aiRoutes from './routes/ai.routes';
+import { enforceInternalAccess, setupHealthRoutes } from '@legal/shared-utils';
 import { PORT } from './config';
 import { logger, requestContext, errorHandler } from '@legal/logger';
 
 const app = express();
 
 app.use(requestContext('ai-service'));
+setupHealthRoutes(app);
 
 app.use(cors());
 app.use(express.json());
