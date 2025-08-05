@@ -2,9 +2,17 @@ import express from 'express';
 import cors from 'cors';
 import { logger, requestContext } from '@legal/logger';
 import { errorHandler } from '@legal/logger';
-import { AppError, corsMiddleware } from '@legal/shared-utils';
+import { AppError, corsMiddleware, catchAsync } from '@legal/shared-utils';
 import { authenticate } from './middleware/auth.middleware';
-import { AI_SERVICE_URL, AUTH_SERVICE_URL, CASE_SERVICE_URL, INTERNAL_SECRET, PORT } from './config';
+import {
+  AI_SERVICE_URL,
+  AUTH_SERVICE_URL,
+  CASE_SERVICE_URL,
+  CLIENTS_SERVICE_URL,
+  INTERNAL_SECRET,
+  PORT,
+} from './config';
+import { proxyRequest } from './utils/proxy';
 
 const app = express();
 
@@ -14,136 +22,67 @@ app.use(requestContext('gateway'));
 
 app.get('/health', (_, res) => res.send('Gateway is healthy'));
 
-// Auth routes - ללא authentication middleware
-app.post('/api/auth/login', async (req, res, next) => {
-  try {
-    const response = await fetch(`${AUTH_SERVICE_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(req.body),
-    });
+// === Public Auth Routes ===
 
-    const data = await response.json();
+app.post('/api/auth/login', catchAsync(async (req, res) => {
+  const data = await proxyRequest(req, `${AUTH_SERVICE_URL}/auth/login`, 'Auth');
+  res.status(200).json(data);
+}));
 
-    if (!response.ok) {
-      return next(new AppError('Login failed', response.status, true, data));
-    }
+app.post('/api/auth/validate', catchAsync(async (req, res) => {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
 
-    res.status(response.status).json(data);
-  } catch (err) {
-    next(new AppError('Auth service unavailable', 500, false, err));
+  if (req.headers.authorization) {
+    headers['Authorization'] = req.headers.authorization;
   }
-});
 
-app.post('/api/auth/validate', async (req, res, next) => {
-  try {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
-    
-    if (req.headers.authorization) {
-      headers['Authorization'] = req.headers.authorization;
-    }
+  const data = await proxyRequest(
+    req,
+    `${AUTH_SERVICE_URL}/auth/validate`,
+    'Auth',
+    headers
+  );
 
-    const response = await fetch(`${AUTH_SERVICE_URL}/auth/validate`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(req.body),
-    });
+  res.status(200).json(data);
+}));
 
-    const data = await response.json();
+// === Protected Routes ===
 
-    if (!response.ok) {
-      return next(new AppError('Validation failed', response.status, true, data));
-    }
+app.get('/api/cases', authenticate, catchAsync(async (req, res) => {
+  const data = await proxyRequest(req, `${CASE_SERVICE_URL}/cases`, 'Case');
+  res.json(data);
+}));
 
-    res.status(response.status).json(data);
-  } catch (err) {
-    next(new AppError('Auth service unavailable', 500, false, err));
-  }
-});
+app.get('/api/ai', authenticate, catchAsync(async (req, res) => {
+  const data = await proxyRequest(req, `${AI_SERVICE_URL}/ai`, 'AI');
+  res.json(data);
+}));
 
-// Protected routes - עם authentication middleware
+app.get('/api/clients/health', authenticate, catchAsync(async (req, res) => {
+  const data = await proxyRequest(req, `${CLIENTS_SERVICE_URL}/clients/health`, 'Clients');
+  logger.info('GET /clients/health - Clients service health check', { data });
+  res.json(data);
+}));
 
-app.get('/api/cases', authenticate, async (req, res, next) => {
-  try {
-    const response = await fetch(`${CASE_SERVICE_URL}/cases`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': req.headers.authorization!,
-        'x-internal-auth': INTERNAL_SECRET
-      },
-    });
-
-    if (!response.ok) {
-      const errorBody = await response.json();
-      return next(new AppError('Case service error', response.status, true, errorBody));
-    }
-
-    const data = await response.json();
-    res.json(data);
-  } catch (err) {
-    next(err);
-  }
-});
-
-app.get('/api/ai', authenticate, async (req, res, next) => {
-  try {
-    const response = await fetch(`${AI_SERVICE_URL}/ai`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': req.headers.authorization!,
-        'x-internal-auth': INTERNAL_SECRET
-      }
-    });
-
-    if (!response.ok) {
-      const errorBody = await response.json();
-      return next(new AppError('Ai service error', response.status, true, errorBody));
-    }
-
-    const data = await response.json();
-    res.json(data);
-  } catch (err) {
-    next(err);
-  }
-});
-
-app.post('/api/auth/invite', authenticate, async (req, res, next) => {
+app.post('/api/auth/invite', authenticate, catchAsync(async (req, res) => {
   const user = (req as any).user;
+  if (!user) throw new AppError('Unauthenticated', 401);
+
   const { email, password, role, officeId } = req.body;
+  const body = { email, password, role, officeId };
 
-  if (!user) {
-    return next(new AppError('Unauthenticated', 401));
-  }
+  const data = await proxyRequest(
+    req,
+    `${AUTH_SERVICE_URL}/auth/invite`,
+    'Auth',
+    { 'x-user-meta': JSON.stringify(user) },
+    body
+  );
 
-  try {
-    const response = await fetch(`${AUTH_SERVICE_URL}/auth/invite`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': req.headers.authorization!,          // עובר הלאה אם auth-service צריך
-        'x-internal-auth': INTERNAL_SECRET,                   // הגנה פנימית
-        'x-user-meta': JSON.stringify(user),                  // מעביר מידע על המזמין
-      },
-      body: JSON.stringify({ email, password, role, officeId }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return next(new AppError('Invite failed', response.status, true, data));
-    }
-
-    res.status(response.status).json(data);
-  } catch (err) {
-    next(new AppError('Auth service unavailable', 500, false, err));
-  }
-});
+  res.json(data);
+}));
 
 app.use(errorHandler);
 

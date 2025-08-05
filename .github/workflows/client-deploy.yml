@@ -45,4 +45,4 @@ jobs:
             --platform=managed \
             --allow-unauthenticated \
             --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
-            --set-env-vars "VITE_API_URL=https://gateway-url/api,VITE_USE_MOCK=false,VITE_USE_AUTH=true,VITE_DEFAULT_THEME=light,VITE_DEFAULT_LOCALE=en"
+            --set-env-vars "VITE_API_URL=https://gateway-service-423226444985.europe-west1.run.app,VITE_USE_MOCK=false,VITE_USE_AUTH=true,VITE_DEFAULT_THEME=light,VITE_DEFAULT_LOCALE=en"
