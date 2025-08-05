@@ -26,12 +26,12 @@ export const AppRoutes = () => {
       <Route element={<MainLayout />}>
         <Route
           path="/"
-          element={
+          element={protect(
             <main style={{ padding: '2rem' }}>
               <h1>{t('welcome')}</h1>
               <Button>{t('start')}</Button>
             </main>
-          }
+          )}
         />
         <Route path="/cases" element={protect(<CasesList />)} />
         <Route path="/cases/:id" element={protect(<CaseDetails />)} />
