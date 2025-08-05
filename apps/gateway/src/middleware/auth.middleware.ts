@@ -16,7 +16,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     logger.info('Validating token with auth-service', { path });
 
     const response = await fetch(`${AUTH_SERVICE_URL}/auth/validate`, {
-      method: 'GET',
+      method: 'POST',
       headers: {
         Authorization: token,
       },
