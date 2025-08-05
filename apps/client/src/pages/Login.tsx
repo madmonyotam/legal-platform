@@ -1,5 +1,5 @@
 import { useAuth } from '../hooks/useAuth';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { Page } from '../components/Page';
 import { GenericForm } from '../components/form/GenericForm';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +8,13 @@ import type { FormSchema } from '../types/formTypes';
 export const Login = () => {
   const { login, isLoading, error, isAuthenticated } = useAuth();
   const { t } = useTranslation();
+  const location = useLocation();
+  
+  // מקבל את הנתיב שמ-ProtectedRoute
+  const from = location.state?.from?.pathname || '/';
 
   if (isAuthenticated) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={from} replace />;
   }
 
   const loginSchema: FormSchema = {
