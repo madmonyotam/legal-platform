@@ -9,10 +9,6 @@ const getTokenFromHeader = (req: Request): string | null => {
   return auth.split(' ')[1];
 };
 
-export const health = (_req: Request, res: Response) => {
-  res.status(200).send('Auth Service is healthy');
-};
-
 export const validate = async (req: Request, res: Response) => {
   // נסה לקבל טוקן מ-header או מ-body
   let token = getTokenFromHeader(req);

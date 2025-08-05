@@ -1,5 +1,5 @@
-import { PrismaClient, UserMeta } from '@prisma/client';
-const prisma = new PrismaClient();
+import { UserMeta } from '@prisma/client';
+import { prisma } from '../db/prisma';
 
 export class UserMetaService {
     static async getUserMeta(uid: string): Promise<UserMeta | null> {
