@@ -3,6 +3,8 @@ import { API_URL, USE_MOCK } from '../config/env';
 import { store } from '../store';
 import { logoutUser } from '../store/slices/authSlice';
 
+console.log(`API_URL: ${API_URL}`); // Log the API URL for debugging
+
 // axios instance
 const apiClient = axios.create({
   baseURL: `${API_URL}/api`, // Ensure the base URL ends with /api
