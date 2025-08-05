@@ -30,7 +30,8 @@ apiClient.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // נקה את המצב ב-Redux
+      console.log('Unauthorized - token might be invalid');
+
       store.dispatch(logoutUser());
       
       // הפנה ללוגאין
