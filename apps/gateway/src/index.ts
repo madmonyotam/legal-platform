@@ -14,6 +14,59 @@ app.use(requestContext('gateway'));
 
 app.get('/health', (_, res) => res.send('Gateway is healthy'));
 
+// Auth routes - ללא authentication middleware
+app.post('/api/auth/login', async (req, res, next) => {
+  try {
+    const response = await fetch(`${AUTH_SERVICE_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(req.body),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return next(new AppError('Login failed', response.status, true, data));
+    }
+
+    res.status(response.status).json(data);
+  } catch (err) {
+    next(new AppError('Auth service unavailable', 500, false, err));
+  }
+});
+
+app.post('/api/auth/validate', async (req, res, next) => {
+  try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    
+    if (req.headers.authorization) {
+      headers['Authorization'] = req.headers.authorization;
+    }
+
+    const response = await fetch(`${AUTH_SERVICE_URL}/auth/validate`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(req.body),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return next(new AppError('Validation failed', response.status, true, data));
+    }
+
+    res.status(response.status).json(data);
+  } catch (err) {
+    next(new AppError('Auth service unavailable', 500, false, err));
+  }
+});
+
+// Protected routes - עם authentication middleware
+
 app.get('/api/cases', authenticate, async (req, res, next) => {
   try {
     const response = await fetch(`${CASE_SERVICE_URL}/cases`, {

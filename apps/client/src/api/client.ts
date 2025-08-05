@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_URL, USE_MOCK } from '../config/env';
 import { store } from '../store';
+import { logoutUser } from '../store/slices/authSlice';
 
 // axios instance
 const apiClient = axios.create({
@@ -28,10 +29,13 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error('API Error:', error.response?.data || error.message);
-
     if (error.response?.status === 401) {
       console.log('Unauthorized - token might be invalid');
+
+      store.dispatch(logoutUser());
+      
+      // הפנה ללוגאין
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }
