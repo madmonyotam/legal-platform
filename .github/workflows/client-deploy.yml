@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'libs/shared-utils/**'
+      - 'libs/**'
       - 'apps/client/**'
       - '.github/workflows/client-deploy.yml'
 

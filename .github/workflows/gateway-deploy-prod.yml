@@ -9,6 +9,7 @@ on:
       - 'apps/ai-service/**'
       - 'apps/auth-service/**'
       - 'apps/case-service/**'
+      - 'apps/clients-service/**'
       - '.github/workflows/gateway-deploy.yml'
 
 jobs:

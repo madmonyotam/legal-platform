@@ -4,9 +4,7 @@ on:
   push:
     branches: [prod]
     paths:
-      - 'libs/db/**'
-      - 'libs/logger/**'
-      - 'libs/shared-utils/**'
+      - 'libs/**'
       - 'apps/auth-service/**'
       - '.github/workflows/auth-deploy-prod.yml'
 

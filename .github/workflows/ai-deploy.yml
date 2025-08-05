@@ -4,8 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'libs/logger/**'
-      - 'libs/shared-utils/**'
+      - 'libs/**'
       - 'apps/ai-service/**'
       - '.github/workflows/ai-deploy.yml'
 

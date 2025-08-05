@@ -1,12 +1,12 @@
-name: Deploy ai-service (prod) to Cloud Run
+name: Deploy clients-service (prod) to Cloud Run
 
 on:
   push:
     branches: [prod]
     paths:
       - 'libs/**'
-      - 'apps/ai-service/**'
-      - '.github/workflows/ai-deploy-prod.yml'
+      - 'apps/clients-service/**'
+      - '.github/workflows/clients-deploy-prod.yml'
 
 jobs:
   deploy:
@@ -31,15 +31,15 @@ jobs:
 
       - name: Build and push Docker image (prod)
         run: |
-          docker build -f apps/ai-service/Dockerfile \
-            -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/ai-service:prod \
+          docker build -f apps/clients-service/Dockerfile \
+            -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/clients-service:prod \
             .
-          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/ai-service:prod
+          docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/clients-service:prod
 
       - name: Deploy to Cloud Run (prod)
         run: |
-          gcloud run deploy ai-service-prod \
-            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/ai-service:prod \
+          gcloud run deploy clients-service-prod \
+            --image=europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/clients-service:prod \
             --project=legal-platform-466208 \
             --region=europe-west1 \
             --platform=managed \
