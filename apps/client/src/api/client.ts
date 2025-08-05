@@ -5,7 +5,13 @@ import { logoutUser } from '../store/slices/authSlice';
 
 // axios instance
 const apiClient = axios.create({
-  baseURL: API_URL,
+  baseURL: `${API_URL}/api`, // Ensure the base URL ends with /api
+  timeout: 10000, // 10 seconds timeout
+  headers: {
+    'Content-Type': 'application/json', // Default content type for JSON requests
+    'Accept': 'application/json', // Accept JSON responses
+  },
+  // Uncomment the following line if you need to send cookies with requests
   // withCredentials: true // מבטל כרגע
 });
 
@@ -33,7 +39,7 @@ apiClient.interceptors.response.use(
       console.log('Unauthorized - token might be invalid');
 
       store.dispatch(logoutUser());
-      
+
       // הפנה ללוגאין
       window.location.href = '/login';
     }
