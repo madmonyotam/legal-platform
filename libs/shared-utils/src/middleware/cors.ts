@@ -7,8 +7,8 @@ const devOrigins = [
 ];
 
 const prodOrigins = [
-    'https://client-423226444985.europe-west1.run.app/',
-    'https://client-prod-423226444985.europe-west1.run.app/'
+    'https://client-423226444985.europe-west1.run.app',
+    'https://client-prod-423226444985.europe-west1.run.app'
 ];
 
 const { CORS_ORIGINS, NODE_ENV } = process.env;

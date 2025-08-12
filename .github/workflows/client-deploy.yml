@@ -32,6 +32,11 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker build -f apps/client/Dockerfile \
+            --build-arg VITE_API_URL=https://auth-service-423226444985.europe-west1.run.app \
+            --build-arg VITE_USE_MOCK=false \
+            --build-arg VITE_USE_AUTH=true \
+            --build-arg VITE_DEFAULT_THEME=light \
+            --build-arg VITE_DEFAULT_LOCALE=en \
             -t europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/client:latest \
             .
           docker push europe-west1-docker.pkg.dev/legal-platform-466208/legal-platform-artifacts/client:latest
@@ -44,5 +49,4 @@ jobs:
             --region=europe-west1 \
             --platform=managed \
             --allow-unauthenticated \
-            --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com \
-            --set-env-vars "VITE_API_URL=https://gateway-service-423226444985.europe-west1.run.app,VITE_USE_MOCK=false,VITE_USE_AUTH=true,VITE_DEFAULT_THEME=light,VITE_DEFAULT_LOCALE=en"
+            --service-account=auth-service-sa@legal-platform-466208.iam.gserviceaccount.com
